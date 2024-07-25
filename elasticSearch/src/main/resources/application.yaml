@@ -1,0 +1,12 @@
+server:
+  port: 8889
+  servlet:
+    context-path: /accountServer
+
+
+spring:
+  application:
+    name: elasticSearch-server
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200

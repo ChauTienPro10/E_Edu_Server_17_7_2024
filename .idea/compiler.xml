@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="student" />
         <module name="gateway" />
+        <module name="ElasticSearch" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,6 +18,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ElasticSearch" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="identity" options="-parameters" />
       <module name="student" options="-parameters" />
