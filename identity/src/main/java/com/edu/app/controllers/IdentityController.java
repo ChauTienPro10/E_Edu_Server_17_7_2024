@@ -24,7 +24,7 @@ import java.text.ParseException;
 @Slf4j
 public class IdentityController {
     AuthenticationService authenticationService;
-    @GetMapping("hl")
+    @GetMapping("/hl")
     public String hello() {
         return "Hello World";
     }

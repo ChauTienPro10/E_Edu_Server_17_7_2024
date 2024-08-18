@@ -4,6 +4,7 @@ import edu.member.student.dto.request.StudentCreationRequest;
 import edu.member.student.dto.response.StudentResponse;
 import edu.member.student.entity.Student;
 import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
 
 

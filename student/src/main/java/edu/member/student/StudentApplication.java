@@ -2,8 +2,10 @@ package edu.member.student;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "edu.member")
+@EnableFeignClients
 public class StudentApplication {
 
 	public static void main(String[] args) {

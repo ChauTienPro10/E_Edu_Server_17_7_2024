@@ -12,10 +12,7 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class StudentResponse {
     String id;
-    String firstName;
-    String lastName;
-    LocalDate dob;
-    String level;
+    String fullname;
     String phone;
     String email;
 }

@@ -1,17 +1,15 @@
-package com.edu.app.dto.response;
+package edu.app.gateway.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationResponse {
-    String token;
-    Date expiryTime;
+public class AuthenticationRequest {
     String username;
+    String password;
 }
+

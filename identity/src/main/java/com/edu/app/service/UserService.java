@@ -29,7 +29,8 @@ public class UserService {
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
     RoleRepository roleRepository;
-    com.edu.app.mapper.profileMapper profileMapper;
+
+
 
     public UserResponse crateNew(UserCreateRequest request){
         if(userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);

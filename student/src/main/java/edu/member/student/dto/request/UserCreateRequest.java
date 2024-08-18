@@ -1,17 +1,14 @@
-package com.edu.app.dto.request;
+package edu.member.student.dto.request;
 
-import com.edu.app.validator.DobConstraint;
+
 import jakarta.validation.constraints.Size;
-
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
-
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserCreateRequest {
     String memberId;
@@ -20,12 +17,4 @@ public class UserCreateRequest {
 
     @Size(min = 6, message = "INVALID_PASSWORD")
     String password;
-
-//    String firstName;
-//    String lastName;
-//
-//    @DobConstraint(min = 10, message = "INVALID_DOB")
-//    LocalDate dob;
-//
-//    String city;
 }

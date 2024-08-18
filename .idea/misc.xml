@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/student/pom.xml" />
         <option value="$PROJECT_DIR$/gateway/pom.xml" />
         <option value="$PROJECT_DIR$/elasticSearch/pom.xml" />
+        <option value="$PROJECT_DIR$/identity/pom.xml" />
       </list>
     </option>
   </component>

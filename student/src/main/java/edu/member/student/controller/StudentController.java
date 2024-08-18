@@ -3,6 +3,7 @@ package edu.member.student.controller;
 import edu.member.student.dto.request.StudentCreationRequest;
 import edu.member.student.dto.response.ApiResponse;
 import edu.member.student.dto.response.StudentResponse;
+import edu.member.student.repository.httpClients.IdentityClient;
 import edu.member.student.service.StudentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +18,16 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
     @Autowired
     StudentService studentService;
+    IdentityClient identityClient;
     @GetMapping("/test")
     public String TestApi(){
-        return "Hello World";
+        return identityClient.hello();
     }
     @PostMapping("/new")
     ApiResponse<StudentResponse> newStudent(@RequestBody StudentCreationRequest request){
-       return  ApiResponse.<StudentResponse>builder()
-               .result(studentService.newStudent(request))
-               .build();
+       return  studentService.newStudent(request);
     }
+
+
+
 }

@@ -20,12 +20,9 @@ public class Student {
     @Id
     @GeneratedValue(generatorClass = UUIDStringGenerator.class)
     String id;
-    @Property("userId")
-    String userId;
-    String firstName;
-    String lastName;
-    LocalDate dob;
-    String level;
+
+    String fullname;
+
     String phone;
     String email;
 }

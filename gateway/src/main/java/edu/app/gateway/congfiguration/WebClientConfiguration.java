@@ -1,5 +1,6 @@
 package edu.app.gateway.congfiguration;
 
+import edu.app.gateway.repository.IdentityClient;
 import edu.app.gateway.repository.StudentClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,18 +16,19 @@ import java.util.List;
 @Configuration
 public class WebClientConfiguration {
     @Bean
-    WebClient webClient(){
+    WebClient studentWebClient() {
         return WebClient.builder()
                 .baseUrl("http://localhost:8081/student")
                 .build();
     }
+// cau hinh client idendity cho gateway
     @Bean
-    StudentClient studentClient(WebClient webClient){
-        HttpServiceProxyFactory httpServiceProxyFactory=HttpServiceProxyFactory
-                .builderFor(WebClientAdapter.create(webClient))
+    WebClient identityWebClient(){
+        return WebClient.builder()
+                .baseUrl("http://localhost:8081/identity")
                 .build();
-        return httpServiceProxyFactory.createClient(StudentClient.class);
     }
+
     @Bean
     CorsWebFilter corsWebFilter(){
         CorsConfiguration corsConfiguration=new CorsConfiguration();
@@ -39,5 +41,20 @@ public class WebClientConfiguration {
 
         return new CorsWebFilter(source);
 
+    }
+
+    @Bean
+    IdentityClient identityClient(WebClient identityWebClient) {
+        HttpServiceProxyFactory httpServiceProxyFactory = HttpServiceProxyFactory
+                .builderFor(WebClientAdapter.create(identityWebClient))
+                .build();
+        return httpServiceProxyFactory.createClient(IdentityClient.class);
+    }
+    @Bean
+    StudentClient studentClient(WebClient studentWebClient) {
+        HttpServiceProxyFactory httpServiceProxyFactory = HttpServiceProxyFactory
+                .builderFor(WebClientAdapter.create(studentWebClient))
+                .build();
+        return httpServiceProxyFactory.createClient(StudentClient.class);
     }
 }

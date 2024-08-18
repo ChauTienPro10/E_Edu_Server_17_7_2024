@@ -1,4 +1,4 @@
-package com.edu.app.dto.response;
+package edu.app.gateway.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
