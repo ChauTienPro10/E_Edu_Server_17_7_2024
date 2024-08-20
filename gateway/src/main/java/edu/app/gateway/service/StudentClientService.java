@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestHeader;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -14,8 +15,8 @@ import reactor.core.publisher.Mono;
 public class StudentClientService {
     @Autowired
     StudentClient studentClient;
-    public Mono<String> getTest(){
+    public Mono<String> getTest(@RequestHeader("Authorization") String token){
 //        return identityClient.introspect(IntrospectRequest.builder().token(token).build());
-        return studentClient.getTest();
+        return studentClient.getTest(token);
     }
 }

@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class StudentController {
     @Autowired
     StudentService studentService;
     IdentityClient identityClient;
+
     @GetMapping("/test")
     public String TestApi(){
         return identityClient.hello();
@@ -28,6 +30,12 @@ public class StudentController {
        return  studentService.newStudent(request);
     }
 
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/testAutho")
+    String getHl(){
+        return "chau duong phat tien";
+    }
 
 
 }

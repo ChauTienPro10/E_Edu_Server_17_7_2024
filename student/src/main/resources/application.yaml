@@ -11,5 +11,18 @@ spring:
       username: neo4j
       password: tien22012003
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: chauduongphattien2201@gmail.com
+    password: qwxf nsem tfgu ekzw
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
 
 

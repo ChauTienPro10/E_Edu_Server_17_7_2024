@@ -9,10 +9,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -27,4 +25,10 @@ public class UserController {
                 .result(userService.crateNew(request))
                 .build();
     }
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/testAutho")
+    String getHl(){
+        return "chau duong phat tien";
+    }
+
 }
