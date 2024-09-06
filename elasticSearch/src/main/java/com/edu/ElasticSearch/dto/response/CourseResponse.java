@@ -1,8 +1,7 @@
-package com.edu.ElasticSearch.dto.request;
+package com.edu.ElasticSearch.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
@@ -11,11 +10,12 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CreateCourseRequest {
+public class CourseResponse {
+    private String id;
     private String title;
     private String description;
     private double price;
     private int duration;
-    String teacher;
+    private String teacher;
     private int level;
 }

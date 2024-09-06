@@ -2,18 +2,20 @@ package com.edu.ElasticSearch.controller;
 
 import com.edu.ElasticSearch.dto.request.CreateCourseRequest;
 import com.edu.ElasticSearch.dto.response.ApiResponse;
+import com.edu.ElasticSearch.dto.response.CourseResponse;
 import com.edu.ElasticSearch.entity.Course;
+import com.edu.ElasticSearch.entity.InforCourse;
 import com.edu.ElasticSearch.exception.ErrorCode;
 import com.edu.ElasticSearch.services.CourseService;
+import com.edu.ElasticSearch.services.InforCourseService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CourseController {
     @Autowired
     CourseService courseService;
+    InforCourseService inforCourseService;
     @PostMapping("/new")
     public ApiResponse<Course> newCourse(@RequestBody CreateCourseRequest request){
         Course course=courseService.createCourse(request);
@@ -41,5 +44,19 @@ public class CourseController {
                     .result(course)
                     .build();
         }
+    }
+    @GetMapping("/getLevel")
+    public List<CourseResponse> getCoursesByLevel(@RequestParam int level) {
+        return courseService.getCoursesByLevel(level);
+    }
+
+    @GetMapping("/search/{text}")
+    public List<Course> searchCourses(@PathVariable String text) {
+        return courseService.searchCourses(text);
+    }
+
+    @PostMapping("/newInforCourse")
+    public InforCourse createInforCourse(@RequestBody InforCourse request){
+        return inforCourseService.newInforCourse((request));
     }
 }

@@ -19,7 +19,8 @@ public enum ErrorCode {
     INVALID_DOB(1008, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
     ERROR_CREATE_NEW_STUDENT(1008,"Have a problem in the process", INTERNAL_SERVER_ERROR),
     ERROR_SEND_EMAIL(1009,"Cannot send this email", INTERNAL_SERVER_ERROR),
-    ERR_CREATE_NEW_COURSE(1010,"Can  not create a new course",INTERNAL_SERVER_ERROR)
+    ERR_CREATE_NEW_COURSE(1010,"Can  not create a new course",INTERNAL_SERVER_ERROR),
+    ERR_CREATE_TEACHER(1011,"YOU CAN NOT CREATE A NEW TEACHER",INTERNAL_SERVER_ERROR),
             ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
