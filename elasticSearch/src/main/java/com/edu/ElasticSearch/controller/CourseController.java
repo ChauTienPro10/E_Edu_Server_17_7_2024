@@ -1,6 +1,7 @@
 package com.edu.ElasticSearch.controller;
 
 import com.edu.ElasticSearch.dto.request.CreateCourseRequest;
+import com.edu.ElasticSearch.dto.request.RemoveInforRequest;
 import com.edu.ElasticSearch.dto.response.ApiResponse;
 import com.edu.ElasticSearch.dto.response.CourseResponse;
 import com.edu.ElasticSearch.entity.Course;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -58,5 +60,28 @@ public class CourseController {
     @PostMapping("/newInforCourse")
     public InforCourse createInforCourse(@RequestBody InforCourse request){
         return inforCourseService.newInforCourse((request));
+    }
+    @GetMapping("/getInforCourse")
+    public InforCourse getInforCOurseByIdCourse(@RequestParam String id){
+        return inforCourseService.getInforCourseByIdCourse(id);
+    }
+    @PostMapping("/removeInforCourse")
+    public boolean removeInforCourse(@RequestBody RemoveInforRequest request){
+        return inforCourseService.removeInforCourse(request.getCourseId());
+    }
+    @PostMapping("/modifyInforCourse")
+    public ApiResponse<InforCourse> modifyInforCourse(@RequestBody InforCourse request){
+        InforCourse one=inforCourseService.modify(request);
+        if(one!=null){
+            return ApiResponse.<InforCourse>builder() // tao Apiresponse tra ve
+                    .code(1000)  // Success code (default)
+                    .message("Course created successfully")
+                    .result(one)
+                    .build();
+        }
+        return ApiResponse.<InforCourse>builder()
+                .code(ErrorCode.ERR_MODIFY_INFOR_COURSE.getCode())
+                .message(ErrorCode.ERR_MODIFY_INFOR_COURSE.getMessage())
+                .build();
     }
 }

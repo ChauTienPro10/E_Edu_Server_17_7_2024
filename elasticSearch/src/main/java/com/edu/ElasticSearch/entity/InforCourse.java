@@ -21,7 +21,9 @@ public class InforCourse {
     @Field(type = FieldType.Text, analyzer = "standard")
     private List<String> methods;
     @Field(type = FieldType.Text, analyzer = "standard")
-    private String require;
+    private List<String> requires;
     @Field(type = FieldType.Text, analyzer = "standard")
     private String course;
+    @Field(type = FieldType.Text, analyzer = "standard")
+    private String descripContent;
 }
