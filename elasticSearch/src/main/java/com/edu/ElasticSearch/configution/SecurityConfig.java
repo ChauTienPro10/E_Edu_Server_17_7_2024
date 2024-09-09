@@ -27,7 +27,7 @@ public class SecurityConfig {
     @Autowired
 
     private static final String[] PUBLIC_ENDPOINTS = {
-            "/course/getLevel","/course/**"
+            "/course/getLevel","/course/**","/video/**"
     };
     private final CustomJwtDecoder customJwtDecoder;
     public SecurityConfig(CustomJwtDecoder customJwtDecoder) {

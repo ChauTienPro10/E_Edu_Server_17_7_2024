@@ -21,7 +21,10 @@ public enum ErrorCode {
     ERROR_SEND_EMAIL(1009,"Cannot send this email", INTERNAL_SERVER_ERROR),
     ERR_CREATE_NEW_COURSE(1010,"Can  not create a new course",INTERNAL_SERVER_ERROR),
     ERR_CREATE_TEACHER(1011,"YOU CAN NOT CREATE A NEW TEACHER",INTERNAL_SERVER_ERROR),
-    ERR_MODIFY_INFOR_COURSE(1012,"change information of this course fail",INTERNAL_SERVER_ERROR)
+    ERR_MODIFY_INFOR_COURSE(1012,"change information of this course failure",INTERNAL_SERVER_ERROR),
+    ERR_ADD_VIDEO(1013,"create a new video failure",INTERNAL_SERVER_ERROR),
+    ERR_REMOVE_VIDEDO(1014,"remove video failure", INVALID_KEY.statusCode),
+    ERR_SAME_NAME_VIDEO(1015,"video name exist",INTERNAL_SERVER_ERROR)
             ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
