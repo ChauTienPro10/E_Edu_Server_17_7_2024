@@ -48,4 +48,8 @@ public class VideoService {
         return true;
     }
 
+    public List<Video> getVidedoByCourse(String nameCourse){
+        return videoRepository.findByCourseOrderBySttAsc(nameCourse);
+    }
+
 }

@@ -26,4 +26,7 @@ public interface VideoRepository extends ElasticsearchRepository<Video,String> {
     @Query("{\"query_string\": {\"query\": \"?0\", \"fields\": [\"title\", \"description\"]}}")
     List<Video> searchByQueryString(String text);
 
+    List<Video> findByCourseOrderBySttAsc(String course);
+
+
 }

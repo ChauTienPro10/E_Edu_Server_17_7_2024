@@ -26,6 +26,7 @@ public class Course {
     @Field(type = FieldType.Integer)
     private int duration;
     private String teacher;
+
     @Field(type = FieldType.Integer)
     private int level;
 

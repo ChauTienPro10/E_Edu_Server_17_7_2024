@@ -64,10 +64,10 @@ public class VideoControler {
                     .build();
         }
     }
-    VideoRepository videoRepository;
-    @GetMapping("/test")
-    public List<Video> get(@RequestParam String text){
-        return videoRepository.searchByQueryString(text);
+
+    @GetMapping("/getListVideo")
+    public List<Video> getListVideo(@RequestParam String idcourse){
+        return videoService.getVidedoByCourse(idcourse);
     }
 
 
