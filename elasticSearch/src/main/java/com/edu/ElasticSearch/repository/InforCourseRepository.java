@@ -9,4 +9,10 @@ import java.util.Optional;
 @Repository
 public interface InforCourseRepository extends ElasticsearchRepository<InforCourse,String> {
     Optional<InforCourse> findByCourse(String course);
+
+    InforCourse save(InforCourse request);
+
+    void delete(InforCourse courseInfor);
+
+    Optional<InforCourse> findById(String id);
 }

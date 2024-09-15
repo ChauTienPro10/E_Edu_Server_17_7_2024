@@ -14,4 +14,6 @@ public interface CourseRepository extends ElasticsearchRepository<Course,String>
 
     @Query("{\"query_string\": {\"query\": \"?0\", \"fields\": [\"name\", \"description\"]}}")
     List<Course> searchByQueryString(String text);
+
+    void save(Course course);
 }

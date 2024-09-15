@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccountPayRepository extends ElasticsearchRepository<AccountPay,String> {
+    AccountPay save(AccountPay newAcc);
 }

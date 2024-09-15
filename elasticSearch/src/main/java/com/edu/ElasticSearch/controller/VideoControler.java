@@ -26,7 +26,7 @@ public class VideoControler {
     @PostMapping("/new")
     public ApiResponse<Video> createVideo(@RequestBody Video request){
         try{
-            Video video =videoService.new_video(request);
+            Video video =videoService.newVideo(request);
             if(video==null){
                 return ApiResponse.<Video>builder()
                         .code(ErrorCode.ERR_SAME_NAME_VIDEO.getCode())
@@ -67,7 +67,7 @@ public class VideoControler {
 
     @GetMapping("/getListVideo")
     public List<Video> getListVideo(@RequestParam String idcourse){
-        return videoService.getVidedoByCourse(idcourse);
+        return videoService.getVideoByCourse(idcourse);
     }
 
 

@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AnswerRepository extends ElasticsearchRepository<Answer,String> {
+    Answer save(Answer ans);
 }

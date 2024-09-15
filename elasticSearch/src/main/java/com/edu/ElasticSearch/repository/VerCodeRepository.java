@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VerCodeRepository extends ElasticsearchRepository<VertiCode,String> {
-    VertiCode findByVercode(String code);
 }

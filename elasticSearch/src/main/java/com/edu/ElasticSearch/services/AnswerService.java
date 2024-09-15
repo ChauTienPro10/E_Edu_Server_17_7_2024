@@ -6,6 +6,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,8 +17,12 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class AnswerService {
-    AnswerRepository answerRepository;
-    public Answer newAnswer(Answer ans){
+
+    private final AnswerRepository answerRepository;
+
+
+
+    public Answer newAnswer(Answer ans) {
         return answerRepository.save(ans);
     }
 }

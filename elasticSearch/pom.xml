@@ -10,6 +10,7 @@
 	</parent>
 	<groupId>com.edu</groupId>
 	<artifactId>ElasticSearch</artifactId>
+	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ElasticSearch</name>
 	<description>Demo project for Spring Boot</description>
@@ -64,7 +65,7 @@
 		<dependency>
 			<groupId>org.elasticsearch.client</groupId>
 			<artifactId>elasticsearch-rest-high-level-client</artifactId>
-			<version>7.9.3</version> <!-- Chọn phiên bản phù hợp với Elasticsearch của bạn -->
+			<version>7.17.9</version> <!-- Chọn phiên bản phù hợp với Elasticsearch của bạn -->
 		</dependency>
 		<dependency>
 			<groupId>org.mapstruct</groupId>
@@ -102,6 +103,15 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-elasticsearch</artifactId>
+			<version>4.4.0</version>
+		</dependency>
+
+
+
 	</dependencies>
 
 	<build>

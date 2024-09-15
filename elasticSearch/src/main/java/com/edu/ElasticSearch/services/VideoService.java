@@ -9,47 +9,51 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class VideoService {
+
     VideoRepository videoRepository;
-    public Video new_video(Video request){
 
-        if(videoRepository.findByTitle(request.getTitle())==null){
-            if(videoRepository.findByStt(request.getStt())==null){
-               return videoRepository.save(request);
-            }
-            else{
-                List<Video> vds=videoRepository.findByCourse(
-                         request.getCourse());
-                for (Video vd:vds){
-                    if(vd.getStt()>=request.getStt()){
-                        vd.setStt(vd.getStt()+1);
-                        videoRepository.save(vd);
+    public Video newVideo(Video request) {
+        // Kiểm tra xem có video nào với title giống nhau không
+        Video existingVideoByTitle = videoRepository.findByTitle(request.getTitle());
+        if (existingVideoByTitle == null) {
+            // Kiểm tra xem có video nào với STT giống nhau không
+            Video existingVideoByStt = videoRepository.findByStt(request.getStt());
+            if (existingVideoByStt == null) {
+                // Nếu không có video nào tồn tại, lưu video mới
+                return videoRepository.save(request);
+            } else {
+                // Cập nhật STT cho các video cùng course
+                List<Video> videos = videoRepository.findByCourse(request.getCourse());
+                for (Video video : videos) {
+                    if (video.getStt() >= request.getStt()) {
+                        video.setStt(video.getStt() + 1);
+                        videoRepository.save(video);
                     }
-
                 }
-               return videoRepository.save(request);
+                return videoRepository.save(request);
             }
-
-
         }
         return null;
     }
-    public  boolean removeVideo(String id){
-        Video video=videoRepository.findById(id).get();
-        if(video==null){
-            return false;
+
+    public boolean removeVideo(String id) {
+        // Tìm video theo ID
+        Optional<Video> videoOptional = Optional.ofNullable(videoRepository.findById(id));
+        if (videoOptional.isPresent()) {
+            videoRepository.delete(videoOptional.get());
+            return true;
         }
-        videoRepository.delete(video);
-        return true;
+        return false;
     }
 
-    public List<Video> getVidedoByCourse(String nameCourse){
+    public List<Video> getVideoByCourse(String nameCourse) {
         return videoRepository.findByCourseOrderBySttAsc(nameCourse);
     }
-
 }
