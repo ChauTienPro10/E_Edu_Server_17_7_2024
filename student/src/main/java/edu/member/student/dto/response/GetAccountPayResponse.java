@@ -1,4 +1,4 @@
-package edu.member.student.dto.request;
+package edu.member.student.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class VerifyCodeRequest {
-
-    String code;
+public class GetAccountPayResponse {
+    String address;
+    String privateKey;
 }

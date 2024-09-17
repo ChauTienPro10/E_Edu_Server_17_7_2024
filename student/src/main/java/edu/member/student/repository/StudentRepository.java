@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentRepository extends Neo4jRepository<Student,String> {
+    Student findByEmail(String email);
 }

@@ -30,6 +30,7 @@ public class EmailService {
     @Autowired
     private JwtUtil jwtUtil;
     private final JwtDecoder jwtDecoder;
+    @Autowired
     VerifyCodeRepository verifyCodeRepository; // khai bao repository cua verifycode
     @Autowired
     public EmailService(JwtDecoder jwtDecoder) {
@@ -65,37 +66,37 @@ public class EmailService {
                 .build();
     }
 
-    public void sendCode(String email){
+    public VerifyCode sendCode(String email){
         try{
             VerifyCode code=generateCode(email);
             sendSimpleEmail(email,"Verify code", code.getCode());
-            verifyCodeRepository.save(code);
+            return verifyCodeRepository.save(code);
         }
         catch (Exception ex){
             log.info(ex.toString());
+            return null;
         }
     }
 
-    public boolean verificationCode(@RequestBody VerifyCodeRequest request){
-        String token=request.getJwt();
-        Jwt jwt=jwtDecoder.decode(token);
+    public boolean verificationCode( VerifyCodeRequest request,String _jwt){
+        Jwt jwt=jwtDecoder.decode(_jwt);
         String username = jwtUtil.extractUsername(jwt);
         Optional<VerifyCode> verifyCode=verifyCodeRepository
                 .findByEmailAndCode(username, request.getCode());
         if (verifyCode.isPresent()) {
+            log.info(verifyCode.get().getExpirationTime().toString());
+
             return verifyCode
                    .map(VerifyCode::getExpirationTime)  // Trích xuất thời gian hết hạn
-                   .map(expirationTime -> expirationTime.isBefore(LocalDateTime.now())) // Kiểm tra xem có sau thời điểm hiện tại
+                   .map(expirationTime -> expirationTime.isAfter(LocalDateTime.now())) // Kiểm tra xem có sau thời điểm hiện tại
                    .orElse(false);
         } else {
             return false; // Nếu không tìm thấy giá trị
         }
     }
 
-    public  String getMail(@RequestBody VerifyCodeRequest request){
-        String token=request.getJwt();
-        Jwt jwt=jwtDecoder.decode(token);
-//        token = token.substring(7);
+    public  String getMail( String _jwt){
+        Jwt jwt=jwtDecoder.decode(_jwt);
         String username = jwtUtil.extractUsername(jwt);
         return username;
     }

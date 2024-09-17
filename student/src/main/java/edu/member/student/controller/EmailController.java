@@ -5,16 +5,16 @@ import edu.member.student.dto.request.VerifyCodeRequest;
 import edu.member.student.dto.response.ApiResponse;
 import edu.member.student.dto.response.EmailSendResponse;
 import edu.member.student.dto.response.StudentResponse;
+import edu.member.student.entity.VerifyCode;
 import edu.member.student.exception.ErrorCode;
 import edu.member.student.service.EmailService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
+
 @Slf4j
 @RestController
 @RequestMapping("/email")
@@ -42,9 +42,47 @@ public class EmailController {
 
     }
 
-    @PostMapping("/getMail")
-    public String getmail(@RequestBody VerifyCodeRequest request){
-        return emailService.getMail(request);
+
+
+    @PostMapping("/newCode")
+    public ApiResponse<VerifyCode> newCode(@RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.startsWith("Bearer ") ? authorizationHeader.substring(7) : authorizationHeader;
+        String email=emailService.getMail(token);
+        VerifyCode newCode=  emailService.sendCode(email);
+        if(newCode==null){
+            return ApiResponse.<VerifyCode>builder()
+                    .code(2001)
+                    .message("cant send code to this email!")
+                    .build();
+        }
+        else{
+            return ApiResponse.<VerifyCode>builder()
+                    .code(1000)
+                    .message("Student created successfully")
+                    .result(newCode)
+                    .build();
+        }
+    }
+
+    @PostMapping("/authenCode")
+    public ApiResponse<Boolean> authenCode(@RequestBody VerifyCodeRequest request
+            ,@RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.startsWith("Bearer ") ? authorizationHeader.substring(7) : authorizationHeader;
+        try{
+            return ApiResponse.<Boolean>builder()
+                    .code(1000)
+                    .message("")
+                    .result(emailService.verificationCode(request,token))
+                    .build();
+        }
+        catch (Exception ex){
+            log.info(ex.toString());
+            return ApiResponse.<Boolean>builder()
+                    .code(2001)
+                    .message(ex.toString())
+                    .result(false)
+                    .build();
+        }
     }
 
 

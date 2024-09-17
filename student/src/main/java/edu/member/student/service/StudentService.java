@@ -32,6 +32,12 @@ public class StudentService {
     UserIdentityMapper userIdentityMapper;
 
     public ApiResponse<StudentResponse>  newStudent(StudentCreationRequest request){
+        if(studentRepository.findByEmail(request.getEmail())!=null){
+            return ApiResponse.<StudentResponse>builder()
+                    .code(2000)
+                    .message("This email has been use!")
+                    .build();
+        }
         try{
             request.setFullname(request.fullnameUper(request.getFullname()));
             Student newStd=studentMapper.toStudent(request);// chuyen yeu cau ve student
