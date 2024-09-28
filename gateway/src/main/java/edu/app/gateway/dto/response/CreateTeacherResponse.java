@@ -3,16 +3,14 @@ package edu.app.gateway.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
-
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationResponse {
-    String token;
-    Date expiryTime;
-    String username;
-    String id;
+public class CreateTeacherResponse {
+    private String id;
+    private String name;
+    private String major;
+    private int level;
 }

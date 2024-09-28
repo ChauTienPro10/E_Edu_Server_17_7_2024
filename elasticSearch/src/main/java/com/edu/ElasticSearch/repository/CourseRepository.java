@@ -16,4 +16,5 @@ public interface CourseRepository extends ElasticsearchRepository<Course,String>
     List<Course> searchByQueryString(String text);
 
     void save(Course course);
+    List<Course> findAll();
 }

@@ -1,5 +1,7 @@
 package edu.member.student.controller;
 
+import edu.member.student.dto.request.AuthenticationRequest;
+import edu.member.student.dto.request.CheckAccPAy;
 import edu.member.student.dto.request.GetAccountPayRequest;
 import edu.member.student.dto.response.ApiResponse;
 import edu.member.student.dto.response.GetAccountPayResponse;
@@ -9,6 +11,7 @@ import edu.member.student.service.PayService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,5 +36,10 @@ public class PayController {
                 .message("create success!")
                 .result(newAcc)
                 .build();
+    }
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/account.pay.check")
+    public ApiResponse<Boolean> checkAccPAy(@RequestBody AuthenticationRequest request){
+        return ApiResponse.<Boolean>builder().result(payService.checkAaccExist(request)).build();
     }
 }

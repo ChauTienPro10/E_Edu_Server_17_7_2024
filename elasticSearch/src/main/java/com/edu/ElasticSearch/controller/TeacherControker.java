@@ -20,25 +20,10 @@ public class TeacherControker {
     TeacherService teacherService;
     @PostMapping("/new")
     public ApiResponse<Teacher> newTeacher(@RequestBody Teacher request){
-        Teacher teacher=teacherService.createNewTeacher(request);
-        if(teacher ==null){
-            log.error("Error creating new student");
-            return ApiResponse.<Teacher>builder()
-                    .code(ErrorCode.ERR_CREATE_TEACHER.getCode())
-                    .message(ErrorCode.ERR_CREATE_TEACHER.getMessage())
-                    .build();
+        return  teacherService.createNewTeacher(request);
         }
-        else{
-            return ApiResponse.<Teacher>builder() // tao Apiresponse tra ve
-                    .code(1000)  // Success code (default)
-                    .message("Course created successfully")
-                    .result(teacher)
-                    .build();
-        }
-    }
-    @GetMapping("/test")
-    String test(){
-        return "gg";
-    }
+
+
+
 
 }

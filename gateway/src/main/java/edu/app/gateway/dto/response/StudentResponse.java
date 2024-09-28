@@ -1,4 +1,4 @@
-package com.edu.ElasticSearch.dto.request;
+package edu.app.gateway.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +8,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class GetAccountPayRequest {
-    String verCode;
-    String memberId;
+public class StudentResponse {
+    String id;
+    String fullname;
+    String phone;
+    String email;
 }

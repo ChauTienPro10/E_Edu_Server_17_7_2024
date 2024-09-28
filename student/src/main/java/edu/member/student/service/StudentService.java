@@ -6,6 +6,7 @@ import edu.member.student.dto.response.ApiResponse;
 import edu.member.student.dto.response.StudentResponse;
 import edu.member.student.entity.Student;
 import edu.member.student.exception.ErrorCode;
+import edu.member.student.exception.StudentErr;
 import edu.member.student.mapper.StudentMapper;
 
 
@@ -18,6 +19,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +35,27 @@ public class StudentService {
     UserIdentityMapper userIdentityMapper;
 
     public ApiResponse<StudentResponse>  newStudent(StudentCreationRequest request){
+        if(!isValidPhoneNumber(request.getPhone())){
+            log.info("phone err: ","phone khong hop le");
+            return ApiResponse.<StudentResponse>builder()
+                    .code(StudentErr.PHONE_INVALID.getCode())
+                    .message(StudentErr.PHONE_INVALID.getMessage())
+                    .build();
+        }
+        if(!isValidEmail(request.getEmail())){
+            log.info("email khong hop le");
+            return ApiResponse.<StudentResponse>builder()
+                    .code(StudentErr.EMAIL_INVALID.getCode())
+                    .message(StudentErr.EMAIL_INVALID.getMessage())
+                    .build();
+        }
+        if(!isValidPassword(request.getPassword())){
+            log.info("password khong hop le");
+            return ApiResponse.<StudentResponse>builder()
+                    .code(StudentErr.PASSWORD_INVALID.getCode())
+                    .message(StudentErr.PASSWORD_INVALID.getMessage())
+                    .build();
+        }
         if(studentRepository.findByEmail(request.getEmail())!=null){
             return ApiResponse.<StudentResponse>builder()
                     .code(2000)
@@ -61,5 +85,28 @@ public class StudentService {
                     .build();
         }
 
+    }
+
+    public static boolean isValidPhoneNumber(String phoneNumber) {// kiem tra so dien thoai co hop le hay kh
+        // Biểu thức chính quy cho số điện thoại
+        String regex = "^(\\+\\d{1,3}[- ]?)?\\d{10}$";
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(phoneNumber).matches();
+    }
+
+    public static boolean isValidEmail(String email) {// kuem tra emial hop le hay khong
+        // Biểu thức chính quy cho email
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(email).matches();
+    }
+
+    public static boolean isValidPassword(String password) {// kiem tra an toan mat khau
+        // Biểu thức chính quy để phát hiện các ký tự nguy hiểm tiềm ẩn cho SQL Injection
+        String dangerousChars = "['\";=--/*\\\\]";
+        Pattern pattern = Pattern.compile(dangerousChars);
+
+        // Kiểm tra xem mật khẩu có chứa các ký tự nguy hiểm không
+        return !pattern.matcher(password).find();
     }
 }

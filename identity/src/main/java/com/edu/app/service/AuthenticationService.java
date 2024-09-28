@@ -33,6 +33,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.UUID;
 
@@ -80,7 +81,9 @@ public class AuthenticationService {
 
         var token = generateToken(user);
 
-        return AuthenticationResponse.builder().token(token).username(request.getUsername())
+        return AuthenticationResponse.builder()
+                .id(user.getId())
+                .token(token).username(request.getUsername())
                 .build();
     }
 
@@ -179,6 +182,14 @@ public class AuthenticationService {
             });
 
         return stringJoiner.toString();
+    }
+
+    public boolean authenPass(AuthenticationRequest request){
+        Optional<User> user=userRepository.findByUsername(request.getUsername());
+        if(user.isEmpty()){return false;}
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        boolean authenticated= passwordEncoder.matches(request.getPassword(), user.get().getPassword());
+        return authenticated;
     }
 
     private record TokenInfo(String token, Date expiryDate) {}

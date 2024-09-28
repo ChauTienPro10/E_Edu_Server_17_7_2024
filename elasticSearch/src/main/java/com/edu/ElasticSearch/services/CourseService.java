@@ -59,6 +59,26 @@ public class CourseService {
 
     }
 
+    public List<Course> getAllCOurse() {
+        List<Course> courses=  courseRepository.findAll();
+//        List<CourseResponse> respone=new ArrayList<CourseResponse>();
+//        for(Course course : courses){
+//            log.info("teacher id",course.getTeacher());
+//            Optional<Teacher> teacher=teacherRepository.findById(course.getTeacher());
+//            CourseResponse courseResponse=CourseResponse.builder().id(Optional.ofNullable(course.getId()).orElse(null))
+//                    .title(course.getTitle())
+//                    .duration(course.getDuration())
+//                    .level(course.getLevel())
+//                    .price(course.getPrice())
+//                    .description(course.getDescription())
+//                    .teacher(teacher.get().getName())
+//                    .build();
+//            respone.add(courseResponse);
+//        }
+        return courses;
+
+    }
+
     public List<Course> searchCourses(String text) {
         return courseRepository.searchByQueryString(text);
     }

@@ -20,5 +20,7 @@ public interface IdentityClient {
 
     @PostExchange(url = "/auth/logout",contentType = MediaType.APPLICATION_JSON_VALUE)
     Mono<ApiResponse<Void>> logout(@RequestBody LogoutRequest request);
+    @PostExchange(url ="/auth/wallet.authen.password",contentType = MediaType.APPLICATION_JSON_VALUE)
+    Mono<ApiResponse<Boolean>> authenPass(@RequestBody AuthenticationRequest request);
 }
 

@@ -1,9 +1,12 @@
 package edu.member.student.service;
 
+import edu.member.student.dto.request.AuthenticationRequest;
+import edu.member.student.dto.request.CheckAccPAy;
 import edu.member.student.dto.request.GetAccountPayRequest;
 import edu.member.student.dto.response.GetAccountPayResponse;
 import edu.member.student.entity.AccountPay;
 import edu.member.student.repository.PayRepository;
+import edu.member.student.repository.httpClients.IdentityClient;
 import edu.member.student.repository.httpClients.TokenClient;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,6 +20,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -26,6 +31,8 @@ public class PayService {
     PayRepository payRepository;
     @Autowired
     TokenClient tokenClient;
+    @Autowired
+    IdentityClient identityClient;
     @NonFinal
     @Value("${jwt.signerKey}")
     private String secretKey;
@@ -55,7 +62,15 @@ public class PayService {
             return null;
         }
     }
+    public boolean checkAaccExist(AuthenticationRequest request){ // kiem tra xem tai khoan da kich hoat token hay chua
+        boolean authen=identityClient.authenPass(request).getResult();
+        if (!authen){
+            return false;
+        }
 
+        Optional<AccountPay> acc= payRepository.findByEmail(request.getUsername());
+        return acc.isPresent();
+    }
 
 
 }

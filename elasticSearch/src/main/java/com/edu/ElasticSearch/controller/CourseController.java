@@ -6,9 +6,11 @@ import com.edu.ElasticSearch.dto.response.ApiResponse;
 import com.edu.ElasticSearch.dto.response.CourseResponse;
 import com.edu.ElasticSearch.entity.Course;
 import com.edu.ElasticSearch.entity.InforCourse;
+import com.edu.ElasticSearch.entity.Subject;
 import com.edu.ElasticSearch.exception.ErrorCode;
 import com.edu.ElasticSearch.services.CourseService;
 import com.edu.ElasticSearch.services.InforCourseService;
+import com.edu.ElasticSearch.services.SubjectService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -52,6 +54,11 @@ public class CourseController {
         return courseService.getCoursesByLevel(level);
     }
 
+    @GetMapping("/get.all")
+    public List<Course> getAllCourse(){
+        return courseService.getAllCOurse();
+    }
+
     @GetMapping("/search/{text}")
     public List<Course> searchCourses(@PathVariable String text) {
         return courseService.searchCourses(text);
@@ -83,5 +90,14 @@ public class CourseController {
                 .code(ErrorCode.ERR_MODIFY_INFOR_COURSE.getCode())
                 .message(ErrorCode.ERR_MODIFY_INFOR_COURSE.getMessage())
                 .build();
+    }
+
+
+
+    ////    xu ly subject
+    SubjectService subjectService;
+    @PostMapping("/subject/new")
+    public ApiResponse<Subject> newSub(@RequestBody Subject request){
+        return subjectService.newSubject(request);
     }
 }

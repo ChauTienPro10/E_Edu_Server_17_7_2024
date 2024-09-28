@@ -27,4 +27,12 @@ spring:
             - StripPrefix=1
 
 
+        - id: course_service
+          uri: http://127.0.0.1:8082
+          predicates:
+            - Path= ${myapp.api-prefix}/elasticSearch/**
+          filters:
+            - StripPrefix=1
+
+
 

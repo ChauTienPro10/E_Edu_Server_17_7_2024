@@ -1,5 +1,10 @@
 package edu.app.gateway.repository;
 
+import edu.app.gateway.dto.request.AuthenticationRequest;
+import edu.app.gateway.dto.request.CheckAccPAy;
+import edu.app.gateway.dto.request.StudentCreationRequest;
+import edu.app.gateway.dto.response.ApiResponse;
+import edu.app.gateway.dto.response.StudentResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -10,4 +15,11 @@ import reactor.core.publisher.Mono;
 public interface StudentClient {
     @GetExchange (url = "/profile/testAutho")
     Mono<String> getTest(@RequestHeader("Authorization") String token);
+
+    @PostExchange (url ="/pay/account.pay.check" )
+    Mono<ApiResponse<Boolean>> checkAccExist(@RequestHeader("Authorization") String token
+    , @RequestBody AuthenticationRequest request);
+
+    @PostExchange (url ="/profile/new" )
+    Mono<ApiResponse<StudentResponse>> Signup(@RequestBody StudentCreationRequest request);
 }
