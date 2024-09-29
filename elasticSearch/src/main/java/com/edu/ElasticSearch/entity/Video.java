@@ -27,8 +27,8 @@ public class Video {
     @Field(type = FieldType.Keyword) // Không sử dụng analyzer cho kiểu Keyword
     private String course;
 
-    @Field(type = FieldType.Text, analyzer = "standard")
-    private String linkId;
+
+    private String link;
 
     @Field(type = FieldType.Integer)
     private int stt;

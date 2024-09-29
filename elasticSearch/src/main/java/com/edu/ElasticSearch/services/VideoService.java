@@ -1,6 +1,8 @@
 package com.edu.ElasticSearch.services;
 
+import com.edu.ElasticSearch.dto.response.ApiResponse;
 import com.edu.ElasticSearch.entity.Video;
+import com.edu.ElasticSearch.exception.ErrorCode;
 import com.edu.ElasticSearch.repository.VideoRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +21,40 @@ public class VideoService {
 
     VideoRepository videoRepository;
 
-    public Video newVideo(Video request) {
+    public ApiResponse<Video>  newVideo(Video request) {
+        if(request.getTitle().isEmpty()){
+            return ApiResponse.<Video>builder()
+                    .code(7003)
+                    .message("tiêu đề không đuược bỏ trống")
+                    .result(null)
+                    .build();
+        }
+        if(videoRepository.findByLink(request.getLink()).isPresent()){
+            return ApiResponse.<Video>builder()
+                    .code(ErrorCode.ERR_VIDEO_EXISTED.getCode())
+                    .message(ErrorCode.ERR_VIDEO_EXISTED.getMessage())
+                    .result(null)
+                    .build();
+        }
         // Kiểm tra xem có video nào với title giống nhau không
-        Video existingVideoByTitle = videoRepository.findByTitle(request.getTitle());
-        if (existingVideoByTitle == null) {
+       Optional <Video> existingVideoByTitle = videoRepository.findByTitle(request.getTitle());
+       if(existingVideoByTitle.isPresent()){
+           return ApiResponse.<Video>builder()
+                   .code(ErrorCode.ERR_VIDEO_NAME_EXISTED.getCode())
+                   .message(ErrorCode.ERR_VIDEO_NAME_EXISTED.getMessage())
+                   .result(null)
+                   .build();
+       }
+        else {
             // Kiểm tra xem có video nào với STT giống nhau không
-            Video existingVideoByStt = videoRepository.findByStt(request.getStt());
-            if (existingVideoByStt == null) {
+            Optional<Video>  existingVideoByStt = videoRepository.findByStt(request.getStt());
+            if (existingVideoByStt.isEmpty()) {
                 // Nếu không có video nào tồn tại, lưu video mới
-                return videoRepository.save(request);
+                return ApiResponse.<Video>builder()
+                        .code(1000)
+                        .message("OK")
+                        .result(videoRepository.save(request))
+                        .build();
             } else {
                 // Cập nhật STT cho các video cùng course
                 List<Video> videos = videoRepository.findByCourse(request.getCourse());
@@ -37,10 +64,14 @@ public class VideoService {
                         videoRepository.save(video);
                     }
                 }
-                return videoRepository.save(request);
+                return ApiResponse.<Video>builder()
+                        .code(1000)
+                        .message("OK")
+                        .result(videoRepository.save(request))
+                        .build();
             }
         }
-        return null;
+
     }
 
     public boolean removeVideo(String id) {

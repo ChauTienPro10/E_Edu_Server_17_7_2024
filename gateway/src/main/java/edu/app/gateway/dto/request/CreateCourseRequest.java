@@ -1,10 +1,7 @@
-package com.edu.ElasticSearch.dto.request;
+package edu.app.gateway.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Data
 @Builder

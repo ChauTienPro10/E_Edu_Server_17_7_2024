@@ -25,8 +25,20 @@ public enum ErrorCode {
     ERR_ADD_VIDEO(1013,"create a new video failure",INTERNAL_SERVER_ERROR),
     ERR_REMOVE_VIDEDO(1014,"remove video failure", INVALID_KEY.statusCode),
     ERR_SAME_NAME_VIDEO(1015,"video name exist",INTERNAL_SERVER_ERROR),
+//    xu ly loi subject
     ERROR_SUBJECT_CODE_EXIST(5001,"code existed",HttpStatus.BAD_REQUEST),
     ERROR_SUBJECT_NAME_EXIST(5002,"name existed",HttpStatus.BAD_REQUEST),
+    // xu ly loi course
+    ERR_COURSE_LEVEL_INVALID(6001,"level invalid",HttpStatus.BAD_REQUEST),
+    ERR_COURSE_TEACHER_INVALID(6002,"Teacher invalid",HttpStatus.BAD_REQUEST),
+    ERR_COURSE_SUBJECT_INVALID(6003,"Subject invalid",HttpStatus.BAD_REQUEST),
+    ERR_COURSE_LEVEL_TEACHER_INVALID(6004,"Level of teacher invalid",HttpStatus.BAD_REQUEST),
+    ERR_COURSE_EXIST(6005,"Course'name is existed",HttpStatus.BAD_REQUEST),
+
+    //// xu ly loi video
+
+    ERR_VIDEO_NAME_EXISTED(7001,"video name existed", HttpStatus.BAD_REQUEST),
+    ERR_VIDEO_EXISTED(7002,"video existed", HttpStatus.BAD_REQUEST),
             ;
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
         this.code = code;

@@ -1,12 +1,10 @@
 package edu.app.gateway.repository;
 
+import edu.app.gateway.dto.request.CreateCourseRequest;
 import edu.app.gateway.dto.request.CreateTeacherRequest;
 import edu.app.gateway.dto.request.IntrospectRequest;
 import edu.app.gateway.dto.request.Subject;
-import edu.app.gateway.dto.response.ApiResponse;
-import edu.app.gateway.dto.response.CourseResponse;
-import edu.app.gateway.dto.response.CreateTeacherResponse;
-import edu.app.gateway.dto.response.IntrospectResponse;
+import edu.app.gateway.dto.response.*;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,4 +24,24 @@ public interface CourseClient {
 
     @PostExchange(url = "/course/subject/new",contentType = MediaType.APPLICATION_JSON_VALUE)
     Mono<ApiResponse<Subject>> newSub(@RequestBody Subject subject);
+
+    @PostExchange(url = "/course/new", contentType = MediaType.APPLICATION_JSON_VALUE)
+    Mono<ApiResponse<Course>> ExchangeNewCourse(@RequestBody CreateCourseRequest request);
+
+    @GetExchange(url = "/teacher/getall")
+    Mono<ApiResponse<List<Teacher>>> getAllTeacher();
+    @GetExchange(url = "/teaacher/get.by.level")
+    Mono<ApiResponse<List<Teacher>>> getByLevelTeacher(@RequestParam int level,@RequestParam String code);
+
+    @PostExchange(url = "/course/modifyInforCourse")// sua thon tin khoa hoc
+    Mono<ApiResponse<InforCourse>> modifyInfor_course(@RequestBody InforCourse request);
+
+    @GetExchange(url = "/course/getInforCourse")
+    Mono<InforCourse> getInforCOurseByIdCourse(@RequestParam String id);
+
+    // xu ly video
+    @PostExchange(url = "/video/new")
+    Mono<ApiResponse<Video>> createVideo(@RequestBody Video request);
+    @GetExchange(url = "/video/getListVideo")
+    Mono<List<Video>> getListVideo(@RequestParam String idcourse);
 }

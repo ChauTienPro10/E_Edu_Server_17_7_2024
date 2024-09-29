@@ -7,6 +7,7 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CourseRepository extends ElasticsearchRepository<Course,String> {
@@ -15,6 +16,7 @@ public interface CourseRepository extends ElasticsearchRepository<Course,String>
     @Query("{\"query_string\": {\"query\": \"?0\", \"fields\": [\"name\", \"description\"]}}")
     List<Course> searchByQueryString(String text);
 
-    void save(Course course);
+    Course save(Course course);
     List<Course> findAll();
+    Optional<Course> findByTitle(String title);
 }

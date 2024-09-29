@@ -11,6 +11,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/teacher")
 @RequiredArgsConstructor
@@ -22,7 +24,14 @@ public class TeacherControker {
     public ApiResponse<Teacher> newTeacher(@RequestBody Teacher request){
         return  teacherService.createNewTeacher(request);
         }
-
+    @GetMapping("/getall")
+    public ApiResponse<List<Teacher>> teacherGetAll(){
+        return teacherService.getAllTeacher();
+    }
+    @GetMapping("/get.by.level")
+    public ApiResponse<List<Teacher>> getByLevel(@RequestParam int level, @RequestParam String code){
+        return teacherService.find_by_level(level,code);
+    }
 
 
 

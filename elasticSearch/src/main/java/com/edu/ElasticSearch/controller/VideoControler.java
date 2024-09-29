@@ -25,27 +25,7 @@ public class VideoControler {
     VideoService videoService;
     @PostMapping("/new")
     public ApiResponse<Video> createVideo(@RequestBody Video request){
-        try{
-            Video video =videoService.newVideo(request);
-            if(video==null){
-                return ApiResponse.<Video>builder()
-                        .code(ErrorCode.ERR_SAME_NAME_VIDEO.getCode())
-                        .message(ErrorCode.ERR_SAME_NAME_VIDEO.getMessage())
-                        .build();
-            }
-            return ApiResponse.<Video>builder() // tao Apiresponse tra ve
-                    .code(1000)  // Success code (default)
-                    .message("add video successfully")
-                    .result(video)
-                    .build();
-        }
-        catch (Exception e){
-            log.info("error",e.toString());
-            return ApiResponse.<Video>builder()
-                    .code(ErrorCode.ERR_ADD_VIDEO.getCode())
-                    .message(ErrorCode.ERR_ADD_VIDEO.getMessage())
-                    .build();
-        }
+        return videoService.newVideo(request);
     }
     @PostMapping("/remove")
     public ApiResponse<Boolean> remove(@RequestBody RemoveVideoRequest request){

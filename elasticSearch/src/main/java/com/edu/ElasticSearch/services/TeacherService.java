@@ -12,6 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -47,6 +50,53 @@ public class TeacherService {
             // Log detailed error
             System.err.println("Error creating new teacher: " + e.getMessage());
             return null;
+        }
+    }
+    public ApiResponse<List<Teacher>> getAllTeacher(){
+        try{
+            return ApiResponse.<List<Teacher>>builder()
+                    .code(1000)
+                    .message("OK")
+                    .result(teacherRepository.findAll())
+                    .build();
+        }
+        catch (Exception e){
+            return ApiResponse.<List<Teacher>>builder()
+                    .code(400)
+                    .message(e.toString())
+                    .result(null)
+                    .build();
+        }
+    }
+    public ApiResponse<List<Teacher>> find_by_level(int level,String code){
+        try{
+            if(code.isEmpty()){
+                return ApiResponse.<List<Teacher>>builder()
+                        .code(1000)
+                        .message("OK")
+                        .result(teacherRepository.findByLevel(level))
+                        .build();
+            }
+            if(level==0){
+                return ApiResponse.<List<Teacher>>builder()
+                        .code(1000)
+                        .message("OK")
+                        .result(teacherRepository.findByMajor(code))
+                        .build();
+            }
+            return ApiResponse.<List<Teacher>>builder()
+                    .code(1000)
+                    .message("OK")
+                    .result(teacherRepository.findByLevelAndMajor(level,code))
+                    .build();
+
+        }
+        catch (Exception e){
+            return ApiResponse.<List<Teacher>>builder()
+                    .code(400)
+                    .message(e.toString())
+                    .result(null)
+                    .build();
         }
     }
 

@@ -17,13 +17,7 @@ import java.util.Optional;
 public class InforCourseService {
     InforCourseRepository inforCourseRepository;
     public InforCourse newInforCourse(InforCourse request) {
-        // Check if the course with the given ID already exists
-        if (getInforCourseByIdCourse(request.getCourse())!=null) {
-            // If course already exists, handle the situation (e.g., throw an exception or return null)
-            return null; // Or throw a custom exception
-        }
 
-        // If the course doesn't exist, save the new course
         return inforCourseRepository.save(request);
     }
 

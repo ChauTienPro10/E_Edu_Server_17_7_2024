@@ -1,22 +1,23 @@
-package com.edu.ElasticSearch.dto.request;
+package edu.app.gateway.dto.response;
+
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CreateCourseRequest {
+public class Course {
+
+    private String id;
     private String title;
     private String description;
     private double price;
     private int duration;
-    String teacher;
+    private String teacher;
     String subject;
     private int level;
+
 }
