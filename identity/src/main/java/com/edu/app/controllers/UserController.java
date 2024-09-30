@@ -25,10 +25,11 @@ public class UserController {
                 .result(userService.crateNew(request))
                 .build();
     }
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/testAutho")
-    String getHl(){
-        return "chau duong phat tien";
-    }
 
+    @PostMapping("/teacher.registration")
+    ApiResponse<UserResponse> create_teacher(@RequestBody @Valid UserCreateRequest request) {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.crateNewTeacher(request))
+                .build();
+    }
 }

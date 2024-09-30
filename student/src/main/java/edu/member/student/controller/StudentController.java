@@ -21,21 +21,13 @@ public class StudentController {
     StudentService studentService;
     IdentityClient identityClient;
 
-    @GetMapping("/test")
-    public String TestApi(){
-        return identityClient.hello();
-    }
+
     @PostMapping("/new")
     ApiResponse<StudentResponse> newStudent(@RequestBody StudentCreationRequest request){
        return  studentService.newStudent(request);
     }
 
 
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/testAutho")
-    String getHl(){
-        return "chau duong phat tien";
-    }
 
 
 }

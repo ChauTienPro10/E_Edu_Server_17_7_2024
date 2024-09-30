@@ -18,6 +18,6 @@ public interface TeacherRepository extends ElasticsearchRepository<Teacher,Strin
     List<Teacher> findByLevel(int level);
     List<Teacher> findByMajor(String code);
     List<Teacher> findByLevelAndMajor(int level,String major);
-
+    Optional<Teacher> findByEmail(String email);
 
 }

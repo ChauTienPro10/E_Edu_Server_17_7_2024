@@ -3,6 +3,7 @@ package edu.member.student.controller;
 import edu.member.student.dto.request.AuthenticationRequest;
 import edu.member.student.dto.request.CheckAccPAy;
 import edu.member.student.dto.request.GetAccountPayRequest;
+import edu.member.student.dto.response.AccountPayRespone;
 import edu.member.student.dto.response.ApiResponse;
 import edu.member.student.dto.response.GetAccountPayResponse;
 import edu.member.student.entity.AccountPay;
@@ -39,7 +40,7 @@ public class PayController {
     }
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/account.pay.check")
-    public ApiResponse<Boolean> checkAccPAy(@RequestBody AuthenticationRequest request){
-        return ApiResponse.<Boolean>builder().result(payService.checkAaccExist(request)).build();
+    public ApiResponse<AccountPayRespone> checkAccPAy(@RequestBody AuthenticationRequest request){
+        return payService.loginAccountPay(request);
     }
 }

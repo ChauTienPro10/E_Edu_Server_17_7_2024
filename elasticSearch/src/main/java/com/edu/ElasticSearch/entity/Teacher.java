@@ -21,7 +21,7 @@ public class Teacher {
     private String name;
     @Field(type = FieldType.Text, analyzer = "standard")
     private String major;
-
+    String email;
 
 
     @Field(type = FieldType.Integer)

@@ -16,7 +16,10 @@ public enum ErrorCode {
     INVALID_DOB(1008, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
     ERROR_CREATE_NEW_STUDENT(1008,"Have a problem in the process",HttpStatus.INTERNAL_SERVER_ERROR),
     ERROR_SEND_EMAIL(1009,"Cannot send this email",HttpStatus.INTERNAL_SERVER_ERROR),
-    ERR_CREATE_ACCOUNTPAY(2000,"Account is null",HttpStatus.INTERNAL_SERVER_ERROR)
+    ERR_CREATE_ACCOUNTPAY(2000,"Account is null",HttpStatus.INTERNAL_SERVER_ERROR),
+
+    //  xu ly nngoai le thanh toan
+    ERR_PAY_ACC_NOT_EXIST(8001,"account pay not exist",HttpStatus.FORBIDDEN),
             ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

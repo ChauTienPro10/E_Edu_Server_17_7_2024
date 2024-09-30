@@ -3,8 +3,11 @@ package edu.member.student.service;
 import edu.member.student.dto.request.AuthenticationRequest;
 import edu.member.student.dto.request.CheckAccPAy;
 import edu.member.student.dto.request.GetAccountPayRequest;
+import edu.member.student.dto.response.AccountPayRespone;
+import edu.member.student.dto.response.ApiResponse;
 import edu.member.student.dto.response.GetAccountPayResponse;
 import edu.member.student.entity.AccountPay;
+import edu.member.student.exception.ErrorCode;
 import edu.member.student.repository.PayRepository;
 import edu.member.student.repository.httpClients.IdentityClient;
 import edu.member.student.repository.httpClients.TokenClient;
@@ -62,15 +65,37 @@ public class PayService {
             return null;
         }
     }
-    public boolean checkAaccExist(AuthenticationRequest request){ // kiem tra xem tai khoan da kich hoat token hay chua
+    public ApiResponse<AccountPayRespone> loginAccountPay(AuthenticationRequest request){ // kiem tra xem tai khoan da kich hoat token hay chua
         boolean authen=identityClient.authenPass(request).getResult();
         if (!authen){
-            return false;
+            return ApiResponse.<AccountPayRespone>builder()
+                    .code(ErrorCode.UNAUTHENTICATED.getCode())
+                    .message(ErrorCode.UNAUTHORIZED.getMessage())
+                    .result(null)
+                    .build();
         }
 
-        Optional<AccountPay> acc= payRepository.findByEmail(request.getUsername());
-        return acc.isPresent();
+        if(payRepository.findByEmail(request.getUsername()).isEmpty()){
+            return ApiResponse.<AccountPayRespone>builder()
+                    .code(ErrorCode.ERR_PAY_ACC_NOT_EXIST.getCode())
+                    .message(ErrorCode.ERR_PAY_ACC_NOT_EXIST.getMessage())
+                    .result(null)
+                    .build();
+        }
+        AccountPay accountPay=payRepository.findByEmail(request.getUsername()).get();
+        return ApiResponse.<AccountPayRespone>builder()
+                .code(1000)
+                .message("OK").result(
+                        AccountPayRespone.builder()
+                                .id(accountPay.getId())
+                                .email(accountPay.getEmail())
+                                .address(accountPay.getAddress())
+                                .balance(tokenClient.getToken(accountPay.getAddress()))
+                                .build()
+                )
+                .build();
     }
+
 
 
 }

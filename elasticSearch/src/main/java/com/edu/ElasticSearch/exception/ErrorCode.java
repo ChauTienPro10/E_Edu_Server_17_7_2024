@@ -39,6 +39,10 @@ public enum ErrorCode {
 
     ERR_VIDEO_NAME_EXISTED(7001,"video name existed", HttpStatus.BAD_REQUEST),
     ERR_VIDEO_EXISTED(7002,"video existed", HttpStatus.BAD_REQUEST),
+
+
+    //xu ly loi ve teacher service
+
             ;
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
         this.code = code;

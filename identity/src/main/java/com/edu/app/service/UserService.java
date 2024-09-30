@@ -40,9 +40,18 @@ public class UserService {
         roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
         user.setRoles(roles);
         user = userRepository.save(user);
-//        var profileRequest = profileMapper.toProfileCreationRequest(request);
-//        profileRequest.setUserId(user.getId());
         return userMapper.toUserResponse(user);
-
     }
+
+    public UserResponse crateNewTeacher(UserCreateRequest request){
+        if(userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
+        User user=userMapper.toUser(request);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        HashSet<Role> roles = new HashSet<>();
+        roleRepository.findById(PredefinedRole.TEACHER_ROLE).ifPresent(roles::add);
+        user.setRoles(roles);
+        user = userRepository.save(user);
+        return userMapper.toUserResponse(user);
+    }
+
 }
