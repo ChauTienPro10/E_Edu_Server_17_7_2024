@@ -1,11 +1,11 @@
 package edu.member.student.controller;
 
-import edu.member.student.dto.request.AuthenticationRequest;
-import edu.member.student.dto.request.CheckAccPAy;
-import edu.member.student.dto.request.GetAccountPayRequest;
+import com.google.zxing.WriterException;
+import edu.member.student.dto.request.*;
 import edu.member.student.dto.response.AccountPayRespone;
 import edu.member.student.dto.response.ApiResponse;
 import edu.member.student.dto.response.GetAccountPayResponse;
+import edu.member.student.dto.response.TransRespone;
 import edu.member.student.entity.AccountPay;
 import edu.member.student.exception.ErrorCode;
 import edu.member.student.service.PayService;
@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/pay")
@@ -43,4 +45,19 @@ public class PayController {
     public ApiResponse<AccountPayRespone> checkAccPAy(@RequestBody AuthenticationRequest request){
         return payService.loginAccountPay(request);
     }
+
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/generateQR")
+    public ApiResponse<String> generateQRCode(@RequestBody GenQRRequest data) throws IOException, WriterException {
+        return ApiResponse.<String>builder()
+                .code(1000)
+                .message("OK")
+                .result(payService.generateQrCode(data))
+                .build();
+    }
+    @PostMapping("/deposit")
+    public ApiResponse<TransRespone> deposit(@RequestBody TransTokenRequest request){
+        return payService.deposit(request);
+    }
+
 }

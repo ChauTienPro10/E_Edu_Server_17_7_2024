@@ -1,11 +1,11 @@
 package edu.member.student.service;
 
-import edu.member.student.dto.request.AuthenticationRequest;
-import edu.member.student.dto.request.CheckAccPAy;
-import edu.member.student.dto.request.GetAccountPayRequest;
+import com.google.zxing.WriterException;
+import edu.member.student.dto.request.*;
 import edu.member.student.dto.response.AccountPayRespone;
 import edu.member.student.dto.response.ApiResponse;
 import edu.member.student.dto.response.GetAccountPayResponse;
+import edu.member.student.dto.response.TransRespone;
 import edu.member.student.entity.AccountPay;
 import edu.member.student.exception.ErrorCode;
 import edu.member.student.repository.PayRepository;
@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -98,4 +99,38 @@ public class PayService {
 
 
 
+
+    public String generateQrCode(GenQRRequest data) throws IOException, WriterException {
+        return QRCodeGenerator.generateQRCodeBase64(data.getData());
+    }
+
+    public ApiResponse<TransRespone> deposit(TransTokenRequest request){
+
+        try{
+
+             TransRespone res=tokenClient.transferToken(TransTokenRequest.builder()
+                            .amount(request.getAmount())
+                            .email(payRepository.findByEmail(request.getEmail()).get().getAddress())
+                    .build());
+            if(res.getResult().equals("ERROR")){
+                return  ApiResponse.<TransRespone>builder()
+                        .code(500)
+                        .message("error in server")
+                        .result(res)
+                        .build();
+            }
+            return ApiResponse.<TransRespone>builder()
+                    .code(1000)
+                    .message("OK")
+                    .result(res)
+                    .build();
+        }
+        catch (Exception ex){
+            return ApiResponse.<TransRespone>builder()
+                    .code(500)
+                    .message("Server error")
+                    .result(null)
+                    .build();
+        }
+    }
 }
