@@ -1,5 +1,6 @@
 package edu.member.student.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,7 +9,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class GenQRRequest {
-    int amount;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class SoketRequest {
     String email;
+    String message;
 }

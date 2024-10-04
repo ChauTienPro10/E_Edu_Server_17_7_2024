@@ -1,13 +1,7 @@
 package edu.app.gateway.repository;
 
-import edu.app.gateway.dto.request.AuthenticationRequest;
-import edu.app.gateway.dto.request.GenQRRequest;
-import edu.app.gateway.dto.request.StudentCreationRequest;
-import edu.app.gateway.dto.request.TransTokenRequest;
-import edu.app.gateway.dto.response.AccountPayRespone;
-import edu.app.gateway.dto.response.ApiResponse;
-import edu.app.gateway.dto.response.StudentResponse;
-import edu.app.gateway.dto.response.TransRespone;
+import edu.app.gateway.dto.request.*;
+import edu.app.gateway.dto.response.*;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.service.annotation.GetExchange;
@@ -30,4 +24,11 @@ public interface StudentClient {
 
     @PostExchange(url = "/pay/deposit")
     Mono<ApiResponse<TransRespone>> deposit( @RequestBody TransTokenRequest request);
+    @PostExchange(url = "/pay/buy.course")
+    Mono<ApiResponse<BuyCourseResponse>> buyCourse(@RequestBody BuyCourseRequest request);
+
+    // authentication
+    @PostExchange(url = "/email/authenCode")
+    ApiResponse<Boolean> authenCode(@RequestBody VerifyCodeRequest request
+            ,@RequestHeader("Authorization") String authorizationHeader) ;
 }

@@ -2,13 +2,13 @@ package edu.member.student.service;
 
 import com.google.zxing.WriterException;
 import edu.member.student.dto.request.*;
-import edu.member.student.dto.response.AccountPayRespone;
-import edu.member.student.dto.response.ApiResponse;
-import edu.member.student.dto.response.GetAccountPayResponse;
-import edu.member.student.dto.response.TransRespone;
+import edu.member.student.dto.response.*;
 import edu.member.student.entity.AccountPay;
+import edu.member.student.entity.RegisterCourse;
+import edu.member.student.entity.VerifyCode;
 import edu.member.student.exception.ErrorCode;
 import edu.member.student.repository.PayRepository;
+import edu.member.student.repository.VerifyCodeRepository;
 import edu.member.student.repository.httpClients.IdentityClient;
 import edu.member.student.repository.httpClients.TokenClient;
 import io.jsonwebtoken.Claims;
@@ -24,6 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -40,6 +42,8 @@ public class PayService {
     @NonFinal
     @Value("${jwt.signerKey}")
     private String secretKey;
+    EmailService emailService;
+    VerifyCodeRepository verifyCodeRepository;
 
 // ham tao mot tai khoan moii trong mang blockchain
     public AccountPay CreateAccountPay( @RequestHeader("Authorization") String authorizationHeader){
@@ -101,7 +105,13 @@ public class PayService {
 
 
     public String generateQrCode(GenQRRequest data) throws IOException, WriterException {
-        return QRCodeGenerator.generateQRCodeBase64(data.getData());
+        if(!verifyCodeRepository.findByEmail(data.getEmail()).isEmpty()){
+            for(Optional<VerifyCode> e: verifyCodeRepository.findByEmail(data.getEmail())){
+                verifyCodeRepository.delete(e.get());
+            }
+        }
+        VerifyCode code=verifyCodeRepository.save(emailService.generateCode(data.getEmail()));
+        return QRCodeGenerator.generateQRCodeBase64(code.getCode());
     }
 
     public ApiResponse<TransRespone> deposit(TransTokenRequest request){
@@ -112,7 +122,8 @@ public class PayService {
                             .amount(request.getAmount())
                             .email(payRepository.findByEmail(request.getEmail()).get().getAddress())
                     .build());
-            if(res.getResult().equals("ERROR")){
+             System.out.println("so du :  "+res.getResult());
+            if(res.getResult()==0){
                 return  ApiResponse.<TransRespone>builder()
                         .code(500)
                         .message("error in server")
@@ -126,9 +137,44 @@ public class PayService {
                     .build();
         }
         catch (Exception ex){
+            System.out.println(ex.getMessage());
             return ApiResponse.<TransRespone>builder()
                     .code(500)
                     .message("Server error")
+                    .result(null)
+                    .build();
+        }
+    }
+
+    public ApiResponse<BuyCourseResponse> buyCourse(BuyCourseRequest request){
+        try{
+            TransTokenRequest transTokenRequest=TransTokenRequest.builder()
+                    .amount(request.getPrice())
+                    .email(payRepository.findByEmail(request.getEmail()).get().getAddress())
+                    .build();
+            TransRespone res=tokenClient.buyCourse(transTokenRequest);
+            if(res.getResult()==0){
+                return  ApiResponse.<BuyCourseResponse>builder()
+                        .code(ErrorCode.ERR_PAY.getCode())
+                        .message(ErrorCode.ERR_PAY.getMessage())
+                        .build();
+            }
+
+            return ApiResponse.<BuyCourseResponse>builder()
+                    .code(1000)
+                    .message("OK")
+                    .result(BuyCourseResponse.builder()
+                            .course(request.getCourse())
+                            .email(request.getEmail())
+                            .price(request.getPrice())
+                            .time(LocalDateTime.now())
+                            .build())
+                    .build();
+        }
+        catch (Exception e){
+            return ApiResponse.<BuyCourseResponse>builder()
+                    .code(500)
+                    .message("Không thể hoàn thành giao dịch")
                     .result(null)
                     .build();
         }

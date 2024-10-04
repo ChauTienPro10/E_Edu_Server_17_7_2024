@@ -2,10 +2,7 @@ package edu.member.student.controller;
 
 import com.google.zxing.WriterException;
 import edu.member.student.dto.request.*;
-import edu.member.student.dto.response.AccountPayRespone;
-import edu.member.student.dto.response.ApiResponse;
-import edu.member.student.dto.response.GetAccountPayResponse;
-import edu.member.student.dto.response.TransRespone;
+import edu.member.student.dto.response.*;
 import edu.member.student.entity.AccountPay;
 import edu.member.student.exception.ErrorCode;
 import edu.member.student.service.PayService;
@@ -58,6 +55,10 @@ public class PayController {
     @PostMapping("/deposit")
     public ApiResponse<TransRespone> deposit(@RequestBody TransTokenRequest request){
         return payService.deposit(request);
+    }
+    @PostMapping("/buy.course")
+    public ApiResponse<BuyCourseResponse> buyCourse(@RequestBody BuyCourseRequest request){
+        return payService.buyCourse(request);
     }
 
 }

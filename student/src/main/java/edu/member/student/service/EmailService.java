@@ -85,7 +85,7 @@ public class EmailService {
                 .findByEmailAndCode(username, request.getCode());
         if (verifyCode.isPresent()) {
             log.info(verifyCode.get().getExpirationTime().toString());
-
+            verifyCodeRepository.delete(verifyCode.get());
             return verifyCode
                    .map(VerifyCode::getExpirationTime)  // Trích xuất thời gian hết hạn
                    .map(expirationTime -> expirationTime.isAfter(LocalDateTime.now())) // Kiểm tra xem có sau thời điểm hiện tại

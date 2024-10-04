@@ -1,6 +1,6 @@
 package edu.member.student.dto.response;
 
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -9,7 +9,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TransRespone {
-    int result;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class SocketResponseDeposit {
+    String email;
+    int balance;
 }

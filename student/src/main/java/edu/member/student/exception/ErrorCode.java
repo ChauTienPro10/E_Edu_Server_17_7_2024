@@ -20,6 +20,9 @@ public enum ErrorCode {
 
     //  xu ly nngoai le thanh toan
     ERR_PAY_ACC_NOT_EXIST(8001,"account pay not exist",HttpStatus.FORBIDDEN),
+
+    // xu ly loi thanh toan
+    ERR_PAY(9001,"Phía máy chủ giao dịch xảy ra lỗi",HttpStatus.INTERNAL_SERVER_ERROR);
             ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

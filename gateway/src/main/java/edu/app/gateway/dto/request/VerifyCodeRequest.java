@@ -1,4 +1,4 @@
-package edu.member.student.dto.request;
+package edu.app.gateway.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class GenQRRequest {
-    int amount;
-    String email;
+public class VerifyCodeRequest {
+
+    String code;
 }

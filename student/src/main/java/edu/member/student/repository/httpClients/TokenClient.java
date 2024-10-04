@@ -1,5 +1,6 @@
 package edu.member.student.repository.httpClients;
 
+import edu.member.student.dto.request.BuyCourseRequest;
 import edu.member.student.dto.request.TransTokenRequest;
 import edu.member.student.dto.response.GetAccountPayResponse;
 import edu.member.student.dto.response.TransRespone;
@@ -16,4 +17,6 @@ public interface TokenClient {
 
     @PostMapping(value = "/registerService/trans.token",produces =MediaType.APPLICATION_JSON_VALUE)
     TransRespone transferToken(@RequestBody TransTokenRequest request);
+    @PostMapping(value = "/registerService/pay.token",produces =MediaType.APPLICATION_JSON_VALUE)
+    TransRespone buyCourse(@RequestBody TransTokenRequest request);
 }
