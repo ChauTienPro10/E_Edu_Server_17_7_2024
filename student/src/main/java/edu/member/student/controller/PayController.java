@@ -20,6 +20,7 @@ import java.io.IOException;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PayController {
     PayService payService;
+
     @PostMapping("/new")
     public ApiResponse<AccountPay> newAccountPay(@RequestHeader("Authorization") String authorizationHeader){
         AccountPay newAcc=payService.CreateAccountPay(authorizationHeader);

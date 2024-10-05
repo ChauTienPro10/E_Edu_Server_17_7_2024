@@ -1,12 +1,15 @@
 package edu.member.student.repository.httpClients;
 
+import edu.member.student.dto.request.AddKeyRequest;
 import edu.member.student.dto.request.BuyCourseRequest;
 import edu.member.student.dto.request.TransTokenRequest;
+import edu.member.student.dto.response.ApiResponse;
 import edu.member.student.dto.response.GetAccountPayResponse;
 import edu.member.student.dto.response.TransRespone;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 @FeignClient(name = "${token.name}", url = "${token.host}")
 public interface TokenClient {
@@ -19,4 +22,7 @@ public interface TokenClient {
     TransRespone transferToken(@RequestBody TransTokenRequest request);
     @PostMapping(value = "/registerService/pay.token",produces =MediaType.APPLICATION_JSON_VALUE)
     TransRespone buyCourse(@RequestBody TransTokenRequest request);
+
+    @PostMapping(value = "/registerService/add.key")
+    boolean addKey(@RequestBody AddKeyRequest request);
 }

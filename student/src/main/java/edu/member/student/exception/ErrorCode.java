@@ -22,7 +22,13 @@ public enum ErrorCode {
     ERR_PAY_ACC_NOT_EXIST(8001,"account pay not exist",HttpStatus.FORBIDDEN),
 
     // xu ly loi thanh toan
-    ERR_PAY(9001,"Phía máy chủ giao dịch xảy ra lỗi",HttpStatus.INTERNAL_SERVER_ERROR);
+    ERR_PAY(9001,"Phía máy chủ giao dịch xảy ra lỗi",HttpStatus.INTERNAL_SERVER_ERROR),
+    ERR_BALANCE_NOT_ENOUGH(9002,"Bạn không đủ token",HttpStatus.FORBIDDEN),
+
+
+
+    // xu ly loi ve xac dinh dang ky khoa hoc
+    ERROR_REGISTER_NOT_EXIST(10001,"Bạn vẫn chưa tham gia khóa học", HttpStatus.FORBIDDEN),
             ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

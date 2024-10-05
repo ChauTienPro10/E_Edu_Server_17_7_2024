@@ -17,8 +17,8 @@ public class WebSocketController {
     PayService payService;
     @MessageMapping("/sendMessage")  // Endpoint cho tin nhắn
     @SendTo("/topic/messages")  // Gửi tin nhắn tới các subscriber
-    public SocketResponseDeposit sendMessage(SoketRequest request) throws Exception {
-       return null;
+    public String handleMessage(String message) {
 
+        return  message;
     }
 }

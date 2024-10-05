@@ -31,4 +31,8 @@ public interface StudentClient {
     @PostExchange(url = "/email/authenCode")
     ApiResponse<Boolean> authenCode(@RequestBody VerifyCodeRequest request
             ,@RequestHeader("Authorization") String authorizationHeader) ;
+
+    // check course register
+    @PostExchange(url = "/register/check")
+    Mono<ApiResponse<Boolean>> checkInforRegister(@RequestBody FetchInforRegisterRequest request);
 }
