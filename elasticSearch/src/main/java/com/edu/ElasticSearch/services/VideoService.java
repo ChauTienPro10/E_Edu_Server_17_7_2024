@@ -3,6 +3,8 @@ package com.edu.ElasticSearch.services;
 import com.edu.ElasticSearch.dto.response.ApiResponse;
 import com.edu.ElasticSearch.entity.Video;
 import com.edu.ElasticSearch.exception.ErrorCode;
+import com.edu.ElasticSearch.repository.CourseRepository;
+import com.edu.ElasticSearch.repository.TeacherRepository;
 import com.edu.ElasticSearch.repository.VideoRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +20,19 @@ import java.util.Optional;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class VideoService {
-
+    TeacherRepository teacherRepository;
+    CourseRepository courseRepository;
     VideoRepository videoRepository;
 
-    public ApiResponse<Video>  newVideo(Video request) {
+    public ApiResponse<Video>  newVideo(Video request,String email) {
+        if(!teacherRepository.findByEmail(email).get().getId()
+                .equals(courseRepository.findById(request.getCourse()).get().getTeacher())){
+            return ApiResponse.<Video>builder()
+                    .code(7004)
+                    .message("Bạn không phải là giáo viên của khóa học này")
+                    .result(null)
+                    .build();
+        }
         if(request.getTitle().isEmpty()){
             return ApiResponse.<Video>builder()
                     .code(7003)

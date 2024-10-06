@@ -1,7 +1,11 @@
 package com.edu.ElasticSearch.services;
 
+import com.edu.ElasticSearch.dto.response.ApiResponse;
 import com.edu.ElasticSearch.entity.InforCourse;
+import com.edu.ElasticSearch.entity.Video;
+import com.edu.ElasticSearch.repository.CourseRepository;
 import com.edu.ElasticSearch.repository.InforCourseRepository;
+import com.edu.ElasticSearch.repository.TeacherRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -15,6 +19,8 @@ import java.util.Optional;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class InforCourseService {
+    TeacherRepository teacherRepository;
+    CourseRepository courseRepository;
     InforCourseRepository inforCourseRepository;
     public InforCourse newInforCourse(InforCourse request) {
 
@@ -44,7 +50,11 @@ public class InforCourseService {
         return false;
     }
 
-    public InforCourse modify(InforCourse request){
+    public InforCourse modify(InforCourse request,String email){
+        if(!teacherRepository.findByEmail(email).get().getId()
+                .equals(courseRepository.findById(request.getCourse()).get().getTeacher())){
+            return null;
+        }
         if(inforCourseRepository.findById(request.getId()).isPresent()){
             InforCourse oldOne=inforCourseRepository.findById(request.getId()).get();
             oldOne.setCourse(request.getCourse());

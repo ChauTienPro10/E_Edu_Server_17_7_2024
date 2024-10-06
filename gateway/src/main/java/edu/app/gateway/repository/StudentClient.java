@@ -4,9 +4,12 @@ import edu.app.gateway.dto.request.*;
 import edu.app.gateway.dto.response.*;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PostExchange;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 public interface StudentClient {
     @GetExchange (url = "/profile/testAutho")
@@ -35,4 +38,7 @@ public interface StudentClient {
     // check course register
     @PostExchange(url = "/register/check")
     Mono<ApiResponse<Boolean>> checkInforRegister(@RequestBody FetchInforRegisterRequest request);
+
+    @GetExchange(url = "/comment/get.comment")
+    Mono<List<CommentResponse>> getComment(@RequestParam String idcourse);
 }

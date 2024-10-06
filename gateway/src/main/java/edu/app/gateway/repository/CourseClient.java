@@ -7,6 +7,7 @@ import edu.app.gateway.dto.request.Subject;
 import edu.app.gateway.dto.response.*;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PostExchange;
@@ -34,14 +35,17 @@ public interface CourseClient {
     Mono<ApiResponse<List<Teacher>>> getByLevelTeacher(@RequestParam int level,@RequestParam String code);
 
     @PostExchange(url = "/course/modifyInforCourse")// sua thon tin khoa hoc
-    Mono<ApiResponse<InforCourse>> modifyInfor_course(@RequestBody InforCourse request);
+    Mono<ApiResponse<InforCourse>> modifyInfor_course(@RequestBody InforCourse request
+            ,@RequestHeader("Authorization") String authorizationHeader);
 
     @GetExchange(url = "/course/getInforCourse")
     Mono<InforCourse> getInforCOurseByIdCourse(@RequestParam String id);
 
     // xu ly video
     @PostExchange(url = "/video/new")
-    Mono<ApiResponse<Video>> createVideo(@RequestBody Video request);
+    Mono<ApiResponse<Video>> createVideo(@RequestBody Video request
+    ,@RequestHeader("Authorization") String authorizationHeader);
+
     @GetExchange(url = "/video/getListVideo")
     Mono<List<Video>> getListVideo(@RequestParam String idcourse);
 }

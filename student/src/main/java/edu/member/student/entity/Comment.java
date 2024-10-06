@@ -22,7 +22,7 @@ public class Comment {
     String id;
 
     String email;
-
+    String course; // luu id khoa hoc
     String content;
     LocalDateTime time;
 }

@@ -10,7 +10,9 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SoketRequest {
+public class CommentSocketRequest {
 
-    String message;
+    private String username;
+    private String content;
+    String courseid;
 }

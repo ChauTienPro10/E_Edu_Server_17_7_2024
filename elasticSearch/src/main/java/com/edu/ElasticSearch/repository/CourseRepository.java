@@ -19,4 +19,5 @@ public interface CourseRepository extends ElasticsearchRepository<Course,String>
     Course save(Course course);
     List<Course> findAll();
     Optional<Course> findByTitle(String title);
+    Optional<Course> findById(String id);
 }

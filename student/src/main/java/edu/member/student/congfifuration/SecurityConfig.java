@@ -29,7 +29,7 @@ public class SecurityConfig {
     @Autowired
 
     private static final String[] PUBLIC_ENDPOINTS = {
-            "/profile/test","/profile/new","/email/**","/ws/**","/register/**"
+            "/profile/test","/profile/new","/email/**","/ws/**","/register/**","/comment/**"
     };
     private final CustomJwtDecoder customJwtDecoder;
     public SecurityConfig(CustomJwtDecoder customJwtDecoder) {
