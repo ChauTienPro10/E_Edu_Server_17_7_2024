@@ -49,13 +49,13 @@ public class StudentService {
                     .message(StudentErr.EMAIL_INVALID.getMessage())
                     .build();
         }
-        if(!isValidPassword(request.getPassword())){
-            log.info("password khong hop le");
-            return ApiResponse.<StudentResponse>builder()
-                    .code(StudentErr.PASSWORD_INVALID.getCode())
-                    .message(StudentErr.PASSWORD_INVALID.getMessage())
-                    .build();
-        }
+//        if(!isValidPassword(request.getPassword())){
+//            log.info("password khong hop le");
+//            return ApiResponse.<StudentResponse>builder()
+//                    .code(StudentErr.PASSWORD_INVALID.getCode())
+//                    .message(StudentErr.PASSWORD_INVALID.getMessage())
+//                    .build();
+//        }
         if(studentRepository.findByEmail(request.getEmail())!=null){
             return ApiResponse.<StudentResponse>builder()
                     .code(2000)

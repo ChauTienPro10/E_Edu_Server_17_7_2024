@@ -41,4 +41,8 @@ public interface StudentClient {
 
     @GetExchange(url = "/comment/get.comment")
     Mono<List<CommentResponse>> getComment(@RequestParam String idcourse);
+
+    @PostExchange(url = "/comment/delete.comment")
+    Mono<Boolean> deleteCmt(@RequestBody DeleteCommentRequest request
+            ,@RequestHeader("Authorization") String authorizationHeader);
 }
