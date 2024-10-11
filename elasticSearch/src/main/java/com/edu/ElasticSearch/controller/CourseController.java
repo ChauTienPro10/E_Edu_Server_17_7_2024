@@ -97,4 +97,9 @@ public class CourseController {
     public ApiResponse<Subject> newSub(@RequestBody Subject request){
         return subjectService.newSubject(request);
     }
+
+    @GetMapping("/findallbyid")
+    public Optional<Course> getYourCourse(@RequestParam String id ){
+        return courseService.getAllByID_course(id);
+    }
 }

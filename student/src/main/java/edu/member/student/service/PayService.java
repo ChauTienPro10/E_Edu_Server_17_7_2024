@@ -153,7 +153,14 @@ public class PayService {
 // mua khoa hoc
     public ApiResponse<BuyCourseResponse> buyCourse(BuyCourseRequest request){
         try{
-
+            // neu tai khoan da dang ky khóa học
+            if(registerRepository.findByEmailAndCourse(request.getEmail(),request.getCourse()).isPresent()){
+                return  ApiResponse.<BuyCourseResponse>builder()
+                        .code(ErrorCode.ERROR_REGISTERED.getCode())
+                        .message(ErrorCode.ERROR_REGISTERED.getMessage())
+                        .build();
+            }
+            // Tien hanh fui yeu cau thanh toan den token server
             TransTokenRequest transTokenRequest=TransTokenRequest.builder()
                     .amount(request.getPrice())
                     .email(payRepository.findByEmail(request.getEmail()).get().getAddress())

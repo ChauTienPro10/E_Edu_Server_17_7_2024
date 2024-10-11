@@ -45,4 +45,7 @@ public interface StudentClient {
     @PostExchange(url = "/comment/delete.comment")
     Mono<Boolean> deleteCmt(@RequestBody DeleteCommentRequest request
             ,@RequestHeader("Authorization") String authorizationHeader);
+
+    @GetExchange(url = "/register/getyourcourse")
+    ApiResponse<Course> getYourCourse (@RequestParam String email);
 }

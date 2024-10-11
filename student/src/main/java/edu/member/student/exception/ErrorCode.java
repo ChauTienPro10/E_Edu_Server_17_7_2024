@@ -29,6 +29,7 @@ public enum ErrorCode {
 
     // xu ly loi ve xac dinh dang ky khoa hoc
     ERROR_REGISTER_NOT_EXIST(10001,"Bạn vẫn chưa tham gia khóa học", HttpStatus.FORBIDDEN),
+    ERROR_REGISTERED(10002,"Bạn đã đăng ký khóa học này",HttpStatus.FORBIDDEN)
             ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
