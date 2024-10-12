@@ -64,7 +64,7 @@ public class RegisterService {
                     .build();
         }
         else{
-            List<Course> responses_Courses=new ArrayList<Course>();
+            List<Course> responses_Courses=new ArrayList<Course>(); 
             for (Optional<RegisterCourse> register: registers){
                 System.out.println(register.get().getCourse());
                 Optional<Course> it=courseClient.getYourCourse(register.get().getCourse());

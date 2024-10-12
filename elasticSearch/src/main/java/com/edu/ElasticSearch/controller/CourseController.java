@@ -102,4 +102,9 @@ public class CourseController {
     public Optional<Course> getYourCourse(@RequestParam String id ){
         return courseService.getAllByID_course(id);
     }
+
+    @GetMapping("/teacher.get.course")
+    public ApiResponse<List<Course>> findCourseByTeacherID(@RequestParam String email){
+        return courseService.findCourseByTeacherID(email);
+    }
 }

@@ -145,5 +145,25 @@ public class CourseService {
     public Optional<Course> getAllByID_course(String id){
         return courseRepository.findById(id);
     }
+    public ApiResponse<List<Course>> findCourseByTeacherID(String email){
+
+        List<Course> courses=courseRepository.findByTeacher(
+                teacherRepository.findByEmail(email).get().getId()
+        );
+        if(courses.isEmpty()){
+            return ApiResponse.<List<Course>>builder()
+                    .code(30000)
+                    .message("Bạn không có liên kết nào")
+                    .build();
+        }
+        else{
+            return ApiResponse.<List<Course>>builder()
+                    .code(1000)
+                    .message("OK")
+                    .result(courses)
+                    .build();
+        }
+    }
+
 
 }

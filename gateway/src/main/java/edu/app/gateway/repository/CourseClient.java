@@ -48,4 +48,7 @@ public interface CourseClient {
 
     @GetExchange(url = "/video/getListVideo")
     Mono<List<Video>> getListVideo(@RequestParam String idcourse);
+
+    @GetExchange(url = "/course/teacher.get.course")
+    Mono<ApiResponse<List<Course>>> findCourseByTeacherID(@RequestParam String email);
 }
