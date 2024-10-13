@@ -6,6 +6,7 @@ import edu.app.gateway.dto.request.IntrospectRequest;
 import edu.app.gateway.dto.request.Subject;
 import edu.app.gateway.dto.response.*;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,4 +52,9 @@ public interface CourseClient {
 
     @GetExchange(url = "/course/teacher.get.course")
     Mono<ApiResponse<List<Course>>> findCourseByTeacherID(@RequestParam String email);
+
+    @GetExchange(url="/course/search/{text}")
+    Mono<List<Course>> searchCourses(@PathVariable String text);
+    @GetExchange(url="/course/matcher_search/{text}")
+    Mono<List<Course>> searchCourses_matcher(@PathVariable String text);
 }

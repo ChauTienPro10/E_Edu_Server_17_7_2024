@@ -2,8 +2,10 @@ package edu.member.student.controller;
 
 import edu.member.student.dto.request.CommentSocketRequest;
 import edu.member.student.entity.Comment;
+import edu.member.student.entity.Notify;
 import edu.member.student.repository.PayRepository;
 import edu.member.student.service.CommentService;
+import edu.member.student.service.NotifyService;
 import edu.member.student.service.PayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -22,5 +24,14 @@ public class WebSocketController {
         // You can now access the deserialized JSON object as a MessageDTO object
         System.out.println("Received message: " + messageDTO.getUsername());
         return commentService.saveComment(messageDTO.getContent(), messageDTO.getUsername(),messageDTO.getCourseid());
+    }
+
+    @Autowired
+    NotifyService notifyService;
+    @MessageMapping("/notify")
+    @SendTo("/topic/notifi_client")
+    public Notify addNotify(Notify request){
+        System.out.println("Received message: "+ request.getContent());
+        return notifyService.saveNotify(request);
     }
 }

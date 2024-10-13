@@ -139,6 +139,9 @@ public class CourseService {
     public List<Course> searchCourses(String text) {
         return courseRepository.searchByQueryString(text);
     }
+    public List<Course> searchCourses_matcher(String text) {
+        return courseRepository.searchByQueryString_matcher(text);
+    }
 
     // lay tat ca khoa hoc theo id
 

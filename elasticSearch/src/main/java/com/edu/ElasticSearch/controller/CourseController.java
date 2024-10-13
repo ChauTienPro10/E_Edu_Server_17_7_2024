@@ -55,6 +55,10 @@ public class CourseController {
     public List<Course> searchCourses(@PathVariable String text) {
         return courseService.searchCourses(text);
     }
+    @GetMapping("/matcher_search/{text}")// tim kiem voi do chinh xac cao hon
+    public List<Course> searchCourses_matcher(@PathVariable String text) {
+        return courseService.searchCourses_matcher(text);
+    }
 
     @PostMapping("/newInforCourse")
     public InforCourse createInforCourse(@RequestBody InforCourse request){
