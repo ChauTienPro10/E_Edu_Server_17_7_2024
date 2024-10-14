@@ -1,8 +1,7 @@
 package com.edu.ElasticSearch.services;
 
 import com.edu.ElasticSearch.dto.request.CreateCourseRequest;
-import com.edu.ElasticSearch.dto.response.ApiResponse;
-import com.edu.ElasticSearch.dto.response.CourseResponse;
+import com.edu.ElasticSearch.dto.response.*;
 import com.edu.ElasticSearch.entity.Course;
 import com.edu.ElasticSearch.entity.InforCourse;
 import com.edu.ElasticSearch.entity.Teacher;
@@ -137,16 +136,27 @@ public class CourseService {
     }
 
     public List<Course> searchCourses(String text) {
-        return courseRepository.searchByQueryString(text);
+        List<Course> list=courseRepository.searchByQueryString(text);
+        for(Course it:list){
+            it.setTeacher(teacherRepository.findById(it.getTeacher()).get().getName());
+        }
+        return list;
     }
     public List<Course> searchCourses_matcher(String text) {
-        return courseRepository.searchByQueryString_matcher(text);
+
+        List<Course> list=courseRepository.searchByQueryString_matcher(text);
+        for(Course it:list){
+            it.setTeacher(teacherRepository.findById(it.getTeacher()).get().getName());
+        }
+        return list;
     }
 
     // lay tat ca khoa hoc theo id
 
     public Optional<Course> getAllByID_course(String id){
-        return courseRepository.findById(id);
+        Optional<Course> course= courseRepository.findById(id);
+        course.get().setTeacher(teacherRepository.findById(course.get().getTeacher()).get().getName());
+        return course;
     }
     public ApiResponse<List<Course>> findCourseByTeacherID(String email){
 
@@ -167,6 +177,24 @@ public class CourseService {
                     .build();
         }
     }
+
+    public Management getInforTeacherAndCourse(){
+        return Management.builder()
+                .numOfTeacher(teacherRepository.count())
+                .numOfCourse(courseRepository.count())
+                .typeofTeacher(Typeof_teacher.builder()
+                        .thpt(teacherRepository.countByLevel(3))
+                        .thcs(teacherRepository.countByLevel(2))
+                        .th(teacherRepository.countByLevel(1))
+                        .build())
+                .typesOfCourses(TypesOfCourses.builder()
+                        .thpt(courseRepository.countByLevel(3))
+                        .thcs(courseRepository.countByLevel(2))
+                        .th(courseRepository.countByLevel(1))
+                        .build())
+                .build();
+    }
+
 
 
 }

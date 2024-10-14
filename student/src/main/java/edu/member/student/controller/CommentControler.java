@@ -2,7 +2,9 @@ package edu.member.student.controller;
 
 import edu.member.student.dto.request.DeleteCommentRequest;
 import edu.member.student.entity.Comment;
+import edu.member.student.entity.Notify;
 import edu.member.student.service.CommentService;
+import edu.member.student.service.NotifyService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -29,4 +31,12 @@ public class CommentControler {
             ,@RequestHeader("Authorization") String authorizationHeader){
         return commentService.deleteCmt(request,authorizationHeader);
     }
+
+    @Autowired
+    NotifyService notifyService;
+    @GetMapping("/get.notify")
+    public List<Notify> getAll_notify(){
+        return notifyService.getNotify();
+    }
+
 }

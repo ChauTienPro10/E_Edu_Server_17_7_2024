@@ -17,10 +17,10 @@ public interface CourseRepository extends ElasticsearchRepository<Course,String>
     List<Course> findAllById(String id);
     @Query("{\"query_string\": {\"query\": \"?0\", \"fields\": [\"title\", \"description\"]}}")
     List<Course> searchByQueryString(String text);
-
+    long countByLevel(int level);
     @Query("{\"query_string\": {\"query\": \"?0\", \"fields\": [\"title\"], \"minimum_should_match\": \"100%\"}}")
     List<Course> searchByQueryString_matcher(String text);
-
+    long count();
     List<Course> findByTeacher(String teacher_id);
     Course save(Course course);
     List<Course> findAll();

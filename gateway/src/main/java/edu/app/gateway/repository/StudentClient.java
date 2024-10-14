@@ -48,4 +48,10 @@ public interface StudentClient {
 
     @GetExchange(url = "/register/getyourcourse")
     ApiResponse<Course> getYourCourse (@RequestParam String email);
+
+    @GetExchange(url = "/comment/get.notify")
+    List<Notify> getAll_notify();
+
+    @GetExchange(url = "/manager/getInforManagement")
+    ApiResponse<Management> getinforManagement();
 }

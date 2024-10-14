@@ -1,6 +1,7 @@
 package com.edu.ElasticSearch.repository;
 
 import com.edu.ElasticSearch.entity.Teacher;
+import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,5 +20,6 @@ public interface TeacherRepository extends ElasticsearchRepository<Teacher,Strin
     List<Teacher> findByMajor(String code);
     List<Teacher> findByLevelAndMajor(int level,String major);
     Optional<Teacher> findByEmail(String email);
-
+    long count();
+    long countByLevel(int level);
 }

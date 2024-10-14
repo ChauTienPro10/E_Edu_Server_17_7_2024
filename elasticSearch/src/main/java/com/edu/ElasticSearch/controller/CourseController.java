@@ -4,6 +4,7 @@ import com.edu.ElasticSearch.dto.request.CreateCourseRequest;
 import com.edu.ElasticSearch.dto.request.RemoveInforRequest;
 import com.edu.ElasticSearch.dto.response.ApiResponse;
 import com.edu.ElasticSearch.dto.response.CourseResponse;
+import com.edu.ElasticSearch.dto.response.Management;
 import com.edu.ElasticSearch.entity.Course;
 import com.edu.ElasticSearch.entity.InforCourse;
 import com.edu.ElasticSearch.entity.Subject;
@@ -110,5 +111,10 @@ public class CourseController {
     @GetMapping("/teacher.get.course")
     public ApiResponse<List<Course>> findCourseByTeacherID(@RequestParam String email){
         return courseService.findCourseByTeacherID(email);
+    }
+
+    @GetMapping("/getNumOfTeacherAndCourses")
+    public Management getNumOfTeacherAndCourses(){
+        return courseService.getInforTeacherAndCourse();
     }
 }
