@@ -57,4 +57,7 @@ public interface CourseClient {
     Mono<List<Course>> searchCourses(@PathVariable String text);
     @GetExchange(url="/course/matcher_search/{text}")
     Mono<List<Course>> searchCourses_matcher(@PathVariable String text);
+
+    @GetExchange(url = "/course/admin.findbyid")
+    Mono<String> admin_findbyid(@RequestParam String id);
 }

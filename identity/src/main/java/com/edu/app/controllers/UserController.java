@@ -1,5 +1,6 @@
 package com.edu.app.controllers;
 
+import com.edu.app.dto.request.AuthenticationRequest;
 import com.edu.app.dto.request.UserCreateRequest;
 import com.edu.app.dto.response.ApiResponse;
 import com.edu.app.dto.response.UserResponse;
@@ -31,5 +32,10 @@ public class UserController {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.crateNewTeacher(request))
                 .build();
+    }
+
+    @PostMapping("/user_change_pass")
+    boolean change_password(@RequestBody AuthenticationRequest request){
+        return userService.changePassword(request.getUsername(), request.getPassword());
     }
 }

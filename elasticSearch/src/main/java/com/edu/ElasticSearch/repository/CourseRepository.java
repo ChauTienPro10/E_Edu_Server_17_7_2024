@@ -13,8 +13,6 @@ import java.util.Optional;
 @Repository
 public interface CourseRepository extends ElasticsearchRepository<Course,String> {
     List<Course> findByLevel(int level);
-    @Query("{\"match\": {\"id\": \"?0\"}}")
-    List<Course> findAllById(String id);
     @Query("{\"query_string\": {\"query\": \"?0\", \"fields\": [\"title\", \"description\"]}}")
     List<Course> searchByQueryString(String text);
     long countByLevel(int level);

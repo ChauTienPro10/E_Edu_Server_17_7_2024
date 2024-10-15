@@ -43,6 +43,20 @@ public class UserService {
         return userMapper.toUserResponse(user);
     }
 
+    public boolean changePassword(String username ,String newPass ){
+        try{
+            User user=userRepository.findByUsername(username).get();
+            user.setPassword(passwordEncoder.encode(newPass));
+            userRepository.save(user);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+
+        }
+
+    }
+
     public UserResponse crateNewTeacher(UserCreateRequest request){
         if(userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
         User user=userMapper.toUser(request);

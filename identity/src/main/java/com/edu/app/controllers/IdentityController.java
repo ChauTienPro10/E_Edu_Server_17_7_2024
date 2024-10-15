@@ -60,5 +60,9 @@ public class IdentityController {
                     .result(false).build();
         }
     }
+    @PostMapping("/authenpassword")
+    public boolean authenpassword(@RequestBody AuthenticationRequest request){
+        return authenticationService.authenPass(request);
+    }
 
 }

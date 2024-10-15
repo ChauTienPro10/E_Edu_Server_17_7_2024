@@ -11,6 +11,7 @@ import com.edu.ElasticSearch.repository.CourseRepository;
 import com.edu.ElasticSearch.repository.InforCourseRepository;
 import com.edu.ElasticSearch.repository.SubjectRepository;
 import com.edu.ElasticSearch.repository.TeacherRepository;
+import com.nimbusds.jose.shaded.gson.Gson;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -193,6 +194,23 @@ public class CourseService {
                         .th(courseRepository.countByLevel(1))
                         .build())
                 .build();
+    }
+
+
+    public String searchInAdminpage(String text){
+
+        try{
+            Gson gson = new Gson();
+            if(courseRepository.findById(text).isPresent()){
+                return gson.toJson(courseRepository.findById(text).get());
+            }
+            else{
+                return gson.toJson(teacherRepository.findById(text).get());
+            }
+        }
+        catch (Exception e){
+            return null;
+        }
     }
 
 

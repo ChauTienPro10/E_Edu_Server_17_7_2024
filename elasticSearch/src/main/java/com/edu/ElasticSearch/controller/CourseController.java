@@ -117,4 +117,9 @@ public class CourseController {
     public Management getNumOfTeacherAndCourses(){
         return courseService.getInforTeacherAndCourse();
     }
+
+    @GetMapping("/admin.findbyid")
+    public String admin_findbyid(@RequestParam String id){
+        return  courseService.searchInAdminpage(id);
+    }
 }
