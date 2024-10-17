@@ -18,8 +18,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Service
@@ -109,4 +112,15 @@ public class StudentService {
         // Kiểm tra xem mật khẩu có chứa các ký tự nguy hiểm không
         return !pattern.matcher(password).find();
     }
+
+    public long get_amount_student(){
+        return studentRepository.count();
+    }
+    public List<Student> getNext10Students(int index, int size ) {
+
+
+        Pageable secondPage = PageRequest.of(index, size); // Tạo PageRequest cho trang thứ 2
+        return studentRepository.findAll(secondPage).getContent();  // Lấy nội dung trang
+    }
+
 }

@@ -54,4 +54,9 @@ public interface StudentClient {
 
     @GetExchange(url = "/manager/getInforManagement")
     ApiResponse<Management> getinforManagement();
+    @GetExchange(url = "/profile/amount_of_student")
+    long get_amount_student();
+    @GetExchange(url = "/profile/get_by_index")
+    List<Student> get_by_index(@RequestParam int index, @RequestParam int size);
+
 }
