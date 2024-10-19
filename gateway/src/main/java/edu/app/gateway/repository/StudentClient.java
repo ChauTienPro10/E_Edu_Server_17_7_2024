@@ -59,4 +59,7 @@ public interface StudentClient {
     @GetExchange(url = "/profile/get_by_index")
     List<Student> get_by_index(@RequestParam int index, @RequestParam int size);
 
+    @GetExchange(url = "/profile/find_student")
+    List<Student> find_student(@RequestParam String data);
+
 }

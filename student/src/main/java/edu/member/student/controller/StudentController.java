@@ -39,6 +39,10 @@ public class StudentController {
         return studentService.getNext10Students(index,size);
     }
 
+    @GetMapping("/find_student")
+    public List<Student> find_student(@RequestParam String data){
+        return studentService.find_student(data);
+    }
 
 
 

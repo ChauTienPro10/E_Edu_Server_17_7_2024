@@ -53,6 +53,7 @@ public class CourseService {
                         .result(null)
                         .build();
             }
+
             if(teacherRepository.findById(course.getTeacher()).isEmpty()){
 
                 return ApiResponse.<Course>builder()
@@ -62,13 +63,24 @@ public class CourseService {
                         .build();
             }
             if(teacherRepository.findById(course.getTeacher()).isPresent()
-                && teacherRepository.findById(course.getTeacher()).get().getLevel()!=course.getLevel()
             ){
-                return ApiResponse.<Course>builder()
-                        .code(ErrorCode.ERR_COURSE_LEVEL_TEACHER_INVALID.getCode())
-                        .message(ErrorCode.ERR_COURSE_LEVEL_TEACHER_INVALID.getMessage())
-                        .result(null)
-                        .build();
+                // kiem tra co dung trinh do giao vien hay khong
+                if(teacherRepository.findById(course.getTeacher()).get().getLevel()!=course.getLevel()){
+                    return ApiResponse.<Course>builder()
+                            .code(ErrorCode.ERR_COURSE_LEVEL_TEACHER_INVALID.getCode())
+                            .message(ErrorCode.ERR_COURSE_LEVEL_TEACHER_INVALID.getMessage())
+                            .result(null)
+                            .build();
+                }
+                // kiem tra cos dung chuyen mon giao vien khong
+               if(teacherRepository.findById(course.getTeacher()).get().getMajor()!=course.getSubject()){
+                   return ApiResponse.<Course>builder()
+                           .code(ErrorCode.ERR_COURSE_AND_TEACHER_NOTVALID.getCode())
+                           .message(ErrorCode.ERR_COURSE_AND_TEACHER_NOTVALID.getMessage())
+                           .result(null)
+                           .build();
+               }
+
             }
             if(subjectRepository.findByCode(course.getSubject()).isEmpty()){
                 return ApiResponse.<Course>builder()
@@ -113,27 +125,11 @@ public class CourseService {
             respone.add(courseResponse);
         }
         return respone;
-
     }
 
     public List<Course> getAllCOurse() {
         List<Course> courses=  courseRepository.findAll();
-//        List<CourseResponse> respone=new ArrayList<CourseResponse>();
-//        for(Course course : courses){
-//            log.info("teacher id",course.getTeacher());
-//            Optional<Teacher> teacher=teacherRepository.findById(course.getTeacher());
-//            CourseResponse courseResponse=CourseResponse.builder().id(Optional.ofNullable(course.getId()).orElse(null))
-//                    .title(course.getTitle())
-//                    .duration(course.getDuration())
-//                    .level(course.getLevel())
-//                    .price(course.getPrice())
-//                    .description(course.getDescription())
-//                    .teacher(teacher.get().getName())
-//                    .build();
-//            respone.add(courseResponse);
-//        }
         return courses;
-
     }
 
     public List<Course> searchCourses(String text) {

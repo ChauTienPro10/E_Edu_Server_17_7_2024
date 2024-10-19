@@ -29,11 +29,12 @@ public enum ErrorCode {
     ERROR_SUBJECT_CODE_EXIST(5001,"code existed",HttpStatus.BAD_REQUEST),
     ERROR_SUBJECT_NAME_EXIST(5002,"name existed",HttpStatus.BAD_REQUEST),
     // xu ly loi course
-    ERR_COURSE_LEVEL_INVALID(6001,"level invalid",HttpStatus.BAD_REQUEST),
-    ERR_COURSE_TEACHER_INVALID(6002,"Teacher invalid",HttpStatus.BAD_REQUEST),
-    ERR_COURSE_SUBJECT_INVALID(6003,"Subject invalid",HttpStatus.BAD_REQUEST),
-    ERR_COURSE_LEVEL_TEACHER_INVALID(6004,"Level of teacher invalid",HttpStatus.BAD_REQUEST),
+    ERR_COURSE_LEVEL_INVALID(6001,"câp độ không hợp lệ",HttpStatus.BAD_REQUEST),
+    ERR_COURSE_TEACHER_INVALID(6002,"Giáo viên kooong hợp lệ",HttpStatus.BAD_REQUEST),
+    ERR_COURSE_SUBJECT_INVALID(6003,"Mã chuyên môn không đúng",HttpStatus.BAD_REQUEST),
+    ERR_COURSE_LEVEL_TEACHER_INVALID(6004,"cấp độ giáo viên không khớp",HttpStatus.BAD_REQUEST),
     ERR_COURSE_EXIST(6005,"Course'name is existed",HttpStatus.BAD_REQUEST),
+    ERR_COURSE_AND_TEACHER_NOTVALID(6006,"chuyên môn giáo viên không hợp để giảng dạy", HttpStatus.BAD_REQUEST),
 
     //// xu ly loi video
 

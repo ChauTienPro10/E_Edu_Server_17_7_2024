@@ -22,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -52,13 +53,7 @@ public class StudentService {
                     .message(StudentErr.EMAIL_INVALID.getMessage())
                     .build();
         }
-//        if(!isValidPassword(request.getPassword())){
-//            log.info("password khong hop le");
-//            return ApiResponse.<StudentResponse>builder()
-//                    .code(StudentErr.PASSWORD_INVALID.getCode())
-//                    .message(StudentErr.PASSWORD_INVALID.getMessage())
-//                    .build();
-//        }
+
         if(studentRepository.findByEmail(request.getEmail())!=null){
             return ApiResponse.<StudentResponse>builder()
                     .code(2000)
@@ -87,7 +82,6 @@ public class StudentService {
                     .message(ErrorCode.ERROR_CREATE_NEW_STUDENT.getMessage())
                     .build();
         }
-
     }
 
     public static boolean isValidPhoneNumber(String phoneNumber) {// kiem tra so dien thoai co hop le hay kh
@@ -117,10 +111,21 @@ public class StudentService {
         return studentRepository.count();
     }
     public List<Student> getNext10Students(int index, int size ) {
-
-
         Pageable secondPage = PageRequest.of(index, size); // Tạo PageRequest cho trang thứ 2
         return studentRepository.findAll(secondPage).getContent();  // Lấy nội dung trang
     }
 
+    public List<Student> find_student(String data){
+        List<Student> response=new ArrayList<Student>();
+        if(data.contains("@gmail.")){
+            response.add(studentRepository.findByEmail(data));
+        }
+        else if(data.matches("[0-9]+")){
+            response.add(studentRepository.findByPhone(data));
+        }
+        else{
+            response=studentRepository.findByFullnameContains(data);
+        }
+        return response;
+    }
 }
