@@ -1,9 +1,6 @@
 package edu.app.gateway.repository;
 
-import edu.app.gateway.dto.request.CreateCourseRequest;
-import edu.app.gateway.dto.request.CreateTeacherRequest;
-import edu.app.gateway.dto.request.IntrospectRequest;
-import edu.app.gateway.dto.request.Subject;
+import edu.app.gateway.dto.request.*;
 import edu.app.gateway.dto.response.*;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,4 +57,7 @@ public interface CourseClient {
 
     @GetExchange(url = "/course/admin.findbyid")
     Mono<String> admin_findbyid(@RequestParam String id);
+
+    @PostExchange(url = "/discount/new")
+    ApiResponse<CreateDiscountResponse> new_discount(@RequestBody CreateDiscountRequest request);
 }

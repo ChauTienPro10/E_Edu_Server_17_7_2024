@@ -62,4 +62,7 @@ public interface StudentClient {
     @GetExchange(url = "/profile/find_student")
     List<Student> find_student(@RequestParam String data);
 
+    @PostExchange(url = "/profile/receive_discount")
+    ApiResponse<MyDiscount> receive_discount(@RequestBody ReceiveDiscountRequest request);
+
 }

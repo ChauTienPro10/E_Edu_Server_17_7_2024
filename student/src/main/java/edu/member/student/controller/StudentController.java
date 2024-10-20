@@ -1,10 +1,13 @@
 package edu.member.student.controller;
 
+import edu.member.student.dto.request.ReceiveDiscountRequest;
 import edu.member.student.dto.request.StudentCreationRequest;
 import edu.member.student.dto.response.ApiResponse;
 import edu.member.student.dto.response.StudentResponse;
+import edu.member.student.entity.MyDiscount;
 import edu.member.student.entity.Student;
 import edu.member.student.repository.httpClients.IdentityClient;
+import edu.member.student.service.MyDiscountService;
 import edu.member.student.service.StudentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,8 @@ public class StudentController {
     @Autowired
     StudentService studentService;
     IdentityClient identityClient;
+    @Autowired
+    MyDiscountService myDiscountService;
 
 
     @PostMapping("/new")
@@ -44,6 +49,9 @@ public class StudentController {
         return studentService.find_student(data);
     }
 
-
+    @PostMapping("/receive_discount")
+    public ApiResponse<MyDiscount> receive_discount( @RequestBody  ReceiveDiscountRequest request){
+        return myDiscountService.receive_discount(request);
+    }
 
 }
