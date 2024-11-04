@@ -38,6 +38,7 @@ public class CourseController {
     JwtDecoder jwtDecoder;
     JwtUtil jwtUtil;
     InforCourseService inforCourseService;
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/new")
     public ApiResponse<Course> newCourse(@RequestBody CreateCourseRequest request){
         return courseService.createCourse(request);
@@ -99,6 +100,7 @@ public class CourseController {
     ////    xu ly subject
     SubjectService subjectService;
     @PostMapping("/subject/new")
+    @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse<Subject> newSub(@RequestBody Subject request){
         return subjectService.newSubject(request);
     }

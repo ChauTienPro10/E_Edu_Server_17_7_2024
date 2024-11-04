@@ -3,6 +3,7 @@ package edu.member.student.repository.httpClients;
 import edu.member.student.dto.response.Course;
 import edu.member.student.dto.response.Discount;
 import edu.member.student.dto.response.Management;
+import edu.member.student.dto.response.Voucher;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,4 +19,7 @@ public interface CourseClient {
     Management getNumOfTeacherAndCourses();
     @GetMapping(value = "/discount/find_by_code")
     Discount find_by_code(@RequestParam("code") String code);
+
+    @GetMapping(value = "/voucher/findByCode")
+    Voucher findByCodeOfVoucher(@RequestParam String code);
 }

@@ -43,6 +43,17 @@ public class UserService {
         return userMapper.toUserResponse(user);
     }
 
+    public UserResponse crateNewAdmin(UserCreateRequest request){
+        if(userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
+        User user=userMapper.toUser(request);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        HashSet<Role> roles = new HashSet<>();
+        roleRepository.findById(PredefinedRole.ADMIN_ROLE).ifPresent(roles::add);
+        user.setRoles(roles);
+        user = userRepository.save(user);
+        return userMapper.toUserResponse(user);
+    }
+
     public boolean changePassword(String username ,String newPass ){
         try{
             User user=userRepository.findByUsername(username).get();

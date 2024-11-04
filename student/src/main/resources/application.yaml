@@ -9,7 +9,7 @@ spring:
     uri: bolt://localhost:7687
     authentication:
       username: neo4j
-      password: tien22012003
+      password: password
 
   mail:
     host: smtp.gmail.com

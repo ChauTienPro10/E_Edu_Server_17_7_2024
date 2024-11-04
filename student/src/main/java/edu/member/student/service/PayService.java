@@ -126,6 +126,7 @@ public class PayService {
              TransRespone res=tokenClient.transferToken(TransTokenRequest.builder()
                             .amount(request.getAmount())
                             .email(payRepository.findByEmail(request.getEmail()).get().getAddress())
+                             .key(payRepository.findByEmail(request.getEmail()).get().getPrivate_key())
                     .build());
              System.out.println("so du :  "+res.getResult());
             if(res.getResult()==0){
@@ -164,6 +165,7 @@ public class PayService {
             TransTokenRequest transTokenRequest=TransTokenRequest.builder()
                     .amount(request.getPrice())
                     .email(payRepository.findByEmail(request.getEmail()).get().getAddress())
+                    .key(payRepository.findByEmail(request.getEmail()).get().getPrivate_key())
                     .build();
             TransRespone res=tokenClient.buyCourse(transTokenRequest);
             if(res.getResult()==0){

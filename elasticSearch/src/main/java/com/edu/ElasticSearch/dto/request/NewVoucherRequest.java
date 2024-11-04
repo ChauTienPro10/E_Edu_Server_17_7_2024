@@ -1,4 +1,4 @@
-package edu.member.student.dto.request;
+package com.edu.ElasticSearch.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -7,11 +7,11 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TransTokenRequest {
-
-    int amount;
-    String email;
-    String key;
-
+public class NewVoucherRequest {
+    String type;
+    Double amount;
+    String name;
 }

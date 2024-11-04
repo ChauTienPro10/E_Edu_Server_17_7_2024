@@ -1,5 +1,6 @@
 package edu.member.student.controller;
 
+import edu.member.student.dto.request.BuyCourseRequest;
 import edu.member.student.dto.request.CommentSocketRequest;
 import edu.member.student.entity.Comment;
 import edu.member.student.entity.Notify;
@@ -33,5 +34,17 @@ public class WebSocketController {
     public Notify addNotify(Notify request){
         System.out.println("Received message: "+ request.getContent());
         return notifyService.saveNotify(request);
+    }
+
+
+
+
+    @MessageMapping("/inform_your_buy")
+    @SendTo("/topic/getInformMyBuy")
+    public Notify sendInformWhenStudentBuyCourse(String nameOfCourse){
+        Notify notify= Notify.builder()
+                .content("Bạn đã mua thành công khóa học "+nameOfCourse)
+                .build();
+        return notifyService.saveNotify(notify);
     }
 }

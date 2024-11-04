@@ -13,13 +13,13 @@ import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Node("my_discount")
-public class MyDiscount {
+@Node("myVoucher")
+public class MyVoucher {
     @Id
     @GeneratedValue(generatorClass = UUIDStringGenerator.class)
     String id;
 
-    String discountcode;
-    String student;
-    boolean status;
+    String voucherId;
+    String studentEmail;
+    boolean used;
 }

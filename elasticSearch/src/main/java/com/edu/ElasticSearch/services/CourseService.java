@@ -73,7 +73,7 @@ public class CourseService {
                             .build();
                 }
                 // kiem tra cos dung chuyen mon giao vien khong
-               if(teacherRepository.findById(course.getTeacher()).get().getMajor()!=course.getSubject()){
+               if(!teacherRepository.findById(course.getTeacher()).get().getMajor().equals(course.getSubject())){
                    return ApiResponse.<Course>builder()
                            .code(ErrorCode.ERR_COURSE_AND_TEACHER_NOTVALID.getCode())
                            .message(ErrorCode.ERR_COURSE_AND_TEACHER_NOTVALID.getMessage())

@@ -30,7 +30,7 @@ public class SecurityConfig {
 
     private static final String[] PUBLIC_ENDPOINTS = {
             "/profile/**","/email/**","/ws/**","/register/**","/comment/**"
-            ,"/manager/**"
+            ,"/manager/**","/voucher/**"
     };
     private final CustomJwtDecoder customJwtDecoder;
     public SecurityConfig(CustomJwtDecoder customJwtDecoder) {
