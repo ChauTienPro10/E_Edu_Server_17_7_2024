@@ -44,6 +44,10 @@ public enum ErrorCode {
 
     //xu ly loi ve teacher service
 
+    // lỗi practice
+    ERR_PRACTICE_COURAE_NOT_FOUND(8001,"Khóa học không tồn tại",HttpStatus.BAD_REQUEST),
+    ERR_PRACTICE_TEACHER_UNEXCEPT(8002,"Bạn không có quyền với khóa học này", HttpStatus.FORBIDDEN),
+
             ;
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
         this.code = code;

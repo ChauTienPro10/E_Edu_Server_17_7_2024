@@ -60,4 +60,10 @@ public interface CourseClient {
 
     @PostExchange(url = "/discount/new")
     ApiResponse<CreateDiscountResponse> new_discount(@RequestBody CreateDiscountRequest request);
+
+    @GetExchange(url = "/voucher/get_all_voucher")
+    List<Voucher> getAllVoucher();
+
+    @PostExchange(url = "/practice/addnew")
+    ApiResponse<Practice> addPractice(@RequestBody CreateNewPracticeRequest request);
 }

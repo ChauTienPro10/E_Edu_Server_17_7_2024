@@ -14,4 +14,5 @@ public class NewVoucherRequest {
     String type;
     Double amount;
     String name;
+    String linkTo;
 }

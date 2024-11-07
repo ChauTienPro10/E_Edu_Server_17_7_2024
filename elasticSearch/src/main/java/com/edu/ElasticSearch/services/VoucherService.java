@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,6 +35,11 @@ public class VoucherService {
         newVoucher.setName(request.getName());
         newVoucher.setVoucherType(type.get());
         newVoucher.setAmount(request.getAmount());
+        newVoucher.setLinkTo(request.getLinkTo());
         return voucherRepository.save(newVoucher);
+    }
+
+    public List<Voucher> getAllVoucher(){
+        return voucherRepository.findAll();
     }
 }

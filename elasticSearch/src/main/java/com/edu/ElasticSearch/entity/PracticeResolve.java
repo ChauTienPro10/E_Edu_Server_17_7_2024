@@ -5,17 +5,17 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = "voucher")
+@Document(indexName="practice_resolve")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Voucher {
+public class PracticeResolve {
     @Id
-    private String code;
-    private String name ;  // Default value set to false
-    private Double amount;
-    private VoucherType voucherType;
-    private String linkTo ;
+    String id;
+    String studentId;
+    String practiceId;
+    String detail;
+
 }

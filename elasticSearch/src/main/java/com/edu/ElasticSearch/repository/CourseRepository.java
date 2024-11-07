@@ -2,6 +2,7 @@ package com.edu.ElasticSearch.repository;
 
 
 import com.edu.ElasticSearch.entity.Course;
+import com.edu.ElasticSearch.entity.Practice;
 import org.elasticsearch.common.recycler.Recycler;
 import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
@@ -24,4 +25,5 @@ public interface CourseRepository extends ElasticsearchRepository<Course,String>
     List<Course> findAll();
     Optional<Course> findByTitle(String title);
     Optional<Course> findById(String id);
+
 }

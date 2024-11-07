@@ -45,8 +45,10 @@ public class VoucherControler {
     public Voucher findByCode(@RequestParam String code){
         return voucherRepository.findById(code);
     }
-    @GetMapping("/findAll")
-    public List<Voucher> findAll(){
-        return voucherRepository.findAll();
+
+
+    @GetMapping("/get_all_voucher")
+    public List<Voucher> getAllVoucher(){
+        return voucherService.getAllVoucher();
     }
 }
