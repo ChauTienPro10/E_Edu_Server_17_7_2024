@@ -12,6 +12,7 @@ import org.springframework.web.service.annotation.PostExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CourseClient {
     @GetExchange (url = "/course/getLevel")
@@ -66,4 +67,7 @@ public interface CourseClient {
 
     @PostExchange(url = "/practice/addnew")
     ApiResponse<Practice> addPractice(@RequestBody CreateNewPracticeRequest request);
+
+    @GetExchange(url = "/practice/getAllCourseById")
+    Optional<List<Practice>> getallPracticeOfCourse(@RequestParam String id);
 }

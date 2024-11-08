@@ -13,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -23,7 +26,7 @@ public class PracticeService {
     @Autowired
     CourseRepository courseRepository;
 
-    public ApiResponse<Practice> CreateNewrequest(CreateNewPracticeRequest request){
+    public ApiResponse<Practice> CreateNewPractice(CreateNewPracticeRequest request){
         if(courseRepository.findById(request.getCourseId()).isEmpty()){
             return ApiResponse.<Practice>builder()
                     .code(ErrorCode.ERR_PRACTICE_COURAE_NOT_FOUND.getCode())
@@ -31,13 +34,7 @@ public class PracticeService {
                     .result(null)
                     .build();
         }
-        if(!courseRepository.findById(request.getCourseId()).get().getTeacher().equals(request.getTeacherId())){
-            return ApiResponse.<Practice>builder()
-                    .code(ErrorCode.ERR_PRACTICE_TEACHER_UNEXCEPT.getCode())
-                    .message(ErrorCode.ERR_PRACTICE_TEACHER_UNEXCEPT.getMessage())
-                    .result(null)
-                    .build();
-        }
+
         Practice practice=new Practice();
         practice.setContent(request.getContent());
         practice.setCourseId(request.getCourseId());
@@ -47,5 +44,9 @@ public class PracticeService {
                 .message("OK")
                 .result(practiceRepository.save(practice))
                 .build();
+    }
+
+    public Optional<List<Practice>> findAllByIdOfCourse(String id){
+        return practiceRepository.findByCourseId(id);
     }
 }
