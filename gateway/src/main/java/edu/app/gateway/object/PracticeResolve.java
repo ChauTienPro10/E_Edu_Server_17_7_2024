@@ -1,14 +1,11 @@
-package com.edu.ElasticSearch.entity;
+package edu.app.gateway.object;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Document(indexName="practice_resolve")
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +13,7 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PracticeResolve {
-    @Id
+
     String id;
     String studentEmail;
     String practiceId;

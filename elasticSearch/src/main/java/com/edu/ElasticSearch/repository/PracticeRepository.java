@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface PracticeRepository extends ElasticsearchRepository<Practice, String> {
     Practice save(Practice practice);
     Optional<List<Practice>> findByCourseId(String id);
+    Optional<Practice> findById(String id);
 }

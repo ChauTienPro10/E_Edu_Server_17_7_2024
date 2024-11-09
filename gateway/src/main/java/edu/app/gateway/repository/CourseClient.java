@@ -70,4 +70,7 @@ public interface CourseClient {
 
     @GetExchange(url = "/practice/getAllCourseById")
     Optional<List<Practice>> getallPracticeOfCourse(@RequestParam String id);
+
+    @PostExchange(url = "/practice/resolve/add")
+    ApiResponse<ResolveResponse> addNewResolve(@RequestBody CreateResolveRequest request);
 }

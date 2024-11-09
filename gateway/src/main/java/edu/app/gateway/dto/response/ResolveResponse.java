@@ -1,28 +1,26 @@
-package com.edu.ElasticSearch.entity;
+package edu.app.gateway.dto.response;
 
+import edu.app.gateway.object.ObserveOfResolve;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Document(indexName="practice_resolve")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PracticeResolve {
-    @Id
+public class ResolveResponse {
     String id;
     String studentEmail;
     String practiceId;
     String result;
     LocalDateTime timestamp;
     Integer numOfLike;
+
     List<ObserveOfResolve> observes;
 
 }

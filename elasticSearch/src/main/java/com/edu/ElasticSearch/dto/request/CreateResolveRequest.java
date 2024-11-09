@@ -3,6 +3,7 @@ package com.edu.ElasticSearch.dto.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Date;
 
 @Getter
 @Setter
@@ -10,10 +11,10 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+public class CreateResolveRequest {
 
-public class CreateNewPracticeRequest {
-    private String result;
-    private String teacherId;
-    String courseId;
-    Integer hardLevel;
+    String studentEmail;
+    String practiceId;
+    String result;
+
 }
