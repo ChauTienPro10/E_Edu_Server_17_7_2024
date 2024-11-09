@@ -15,7 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.convert.ElasticsearchCustomConversions;
+import org.springframework.data.elasticsearch.core.convert.MappingElasticsearchConverter;
+import org.springframework.data.elasticsearch.core.mapping.SimpleElasticsearchMappingContext;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -104,20 +108,62 @@ public class SecurityConfig {
         return source;
     }
 
+//    @Bean(destroyMethod = "close")
+//    public RestHighLevelClient restClient() {
+//        RestClientBuilder builder = RestClient.builder(new HttpHost("localhost", 9200, "http"))
+//                .setDefaultHeaders(compatibilityHeaders());
+//
+//        return new RestHighLevelClient(builder);
+//    }
+//    @Bean(name = "elasticsearchTemplate")  // Explicitly name the bean
+//    public ElasticsearchRestTemplate elasticsearchRestTemplate() {
+//        return new ElasticsearchRestTemplate(restClient());
+//    }
+//    private Header[] compatibilityHeaders() {
+//        return new Header[]{new BasicHeader(HttpHeaders.ACCEPT, "application/vnd.elasticsearch+json;compatible-with=7"), new BasicHeader(HttpHeaders.CONTENT_TYPE, "application/vnd.elasticsearch+json;compatible-with=7")};
+//    }
+
+
+
+
     @Bean(destroyMethod = "close")
     public RestHighLevelClient restClient() {
         RestClientBuilder builder = RestClient.builder(new HttpHost("localhost", 9200, "http"))
                 .setDefaultHeaders(compatibilityHeaders());
-
         return new RestHighLevelClient(builder);
     }
 
-    @Bean(name = "elasticsearchTemplate")  // Explicitly name the bean
+    // Bean cho ElasticsearchRestTemplate, sử dụng MappingElasticsearchConverter đã cấu hình converter tùy chỉnh
+    @Bean(name = "elasticsearchTemplate")
     public ElasticsearchRestTemplate elasticsearchRestTemplate() {
-        return new ElasticsearchRestTemplate(restClient());
+        return new ElasticsearchRestTemplate(restClient(), mappingElasticsearchConverter());
     }
+
+    // Các header tương thích với Elasticsearch
     private Header[] compatibilityHeaders() {
-        return new Header[]{new BasicHeader(HttpHeaders.ACCEPT, "application/vnd.elasticsearch+json;compatible-with=7"), new BasicHeader(HttpHeaders.CONTENT_TYPE, "application/vnd.elasticsearch+json;compatible-with=7")};
+        return new Header[]{
+                new BasicHeader(HttpHeaders.ACCEPT, "application/vnd.elasticsearch+json;compatible-with=7"),
+                new BasicHeader(HttpHeaders.CONTENT_TYPE, "application/vnd.elasticsearch+json;compatible-with=7")
+        };
+    }
+
+    // Converter tùy chỉnh cho Elasticsearch
+    @Bean
+    public ElasticsearchCustomConversions elasticsearchCustomConversions() {
+        return new ElasticsearchCustomConversions(Arrays.asList(
+                new LongToLocalDateTimeConverter(),
+                new LocalDateTimeToLongConverter()
+        ));
+    }
+
+    // Sử dụng SimpleElasticsearchMappingContext và ElasticsearchCustomConversions
+    @Bean
+    public MappingElasticsearchConverter mappingElasticsearchConverter() {
+        SimpleElasticsearchMappingContext mappingContext = new SimpleElasticsearchMappingContext();
+        mappingContext.setSimpleTypeHolder(elasticsearchCustomConversions().getSimpleTypeHolder());
+        MappingElasticsearchConverter converter = new MappingElasticsearchConverter(mappingContext);
+        converter.setConversions(elasticsearchCustomConversions());
+        return converter;
     }
 
 

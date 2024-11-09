@@ -15,25 +15,27 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class PracticeResolveService {
-    @Autowired PracticeResolveRepository practiceResolveRepository;
+    @Autowired
+    PracticeResolveRepository practiceResolveRepository;
     @Autowired
     PracticeRepository practiceRepository;
 
-    public ApiResponse<ResolveResponse> saveNewPracticeResolve(CreateResolveRequest request){
+    public ApiResponse<ResolveResponse> saveNewPracticeResolve(CreateResolveRequest request) {
 
-        if(practiceRepository.findById(request.getPracticeId()).isEmpty()){
+        if (practiceRepository.findById(request.getPracticeId()).isEmpty()) {
             return ApiResponse.<ResolveResponse>builder()
                     .code(ErrorCode.ERR_PRACTICE_ID_NOT_EXIST.getCode())
                     .message(ErrorCode.ERR_PRACTICE_ID_NOT_EXIST.getMessage())
                     .build();
         }
-        try{
+        try {
 
 
-            PracticeResolve newResolve=PracticeResolve.builder()
+            PracticeResolve newResolve = PracticeResolve.builder()
                     .numOfLike(0)
                     .practiceId(request.getPracticeId())
                     .observes(new ArrayList<ObserveOfResolve>())
@@ -56,14 +58,31 @@ public class PracticeResolveService {
                             .build())
                     .build();
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return ApiResponse.<ResolveResponse>builder()
                     .result(null)
                     .code(500)
                     .message("Error from server")
                     .build();
         }
+    }
+
+    public List<ResolveResponse> getAllPracticeResolve(String practiceId) {
+        List<ResolveResponse> responses = new ArrayList<ResolveResponse>();
+        List<PracticeResolve> practiceResolves = practiceResolveRepository.findAllByPracticeId(practiceId);
+        for (PracticeResolve practiceResolve : practiceResolves) {
+
+            responses.add(ResolveResponse.builder()
+                    .id(practiceResolve.getId())
+                    .numOfLike(practiceResolve.getNumOfLike())
+                    .practiceId(practiceResolve.getPracticeId())
+                    .observes(practiceResolve.getObserves())
+                    .result(practiceResolve.getResult())
+                    .studentEmail(practiceResolve.getStudentEmail())
+                    .timestamp(practiceResolve.getTimestamp())
+                    .build());
+        }
+        return responses;
     }
 
 }

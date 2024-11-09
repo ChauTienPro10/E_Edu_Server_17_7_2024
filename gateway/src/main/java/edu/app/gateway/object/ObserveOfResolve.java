@@ -3,6 +3,7 @@ package edu.app.gateway.object;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Builder
@@ -15,7 +16,7 @@ public class ObserveOfResolve {
     String id;
     String resolveId;
     String studentId;
-    Date timestamp;
+    LocalDateTime timestamp;
     String content;
     PracticeResolve practiceResolve;
 }

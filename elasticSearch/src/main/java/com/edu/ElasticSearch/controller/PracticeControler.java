@@ -32,4 +32,9 @@ public class PracticeControler {
     public ApiResponse<ResolveResponse> addNewResolve(@RequestBody CreateResolveRequest request){
         return practiceResolveServicer.saveNewPracticeResolve(request);
     }
+
+    @GetMapping("/resolve/getAll")
+    public List<ResolveResponse> getAllResolve(@RequestParam String idPractice){
+        return practiceResolveServicer.getAllPracticeResolve(idPractice);
+    }
 }
