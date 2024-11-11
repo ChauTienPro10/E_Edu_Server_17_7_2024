@@ -2,6 +2,7 @@ package edu.app.gateway.repository;
 
 import edu.app.gateway.dto.request.*;
 import edu.app.gateway.dto.response.*;
+import edu.app.gateway.object.CommentOfResolve;
 import edu.app.gateway.object.Like;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -80,4 +81,7 @@ public interface CourseClient {
 
     @PostExchange(url="/practice/resolve/like")
     Like like(@RequestBody LikeResolveRequest request);
+
+    @PostExchange(url = "/practice/resolve/comment/new")
+    public CommentOfResolve newComment(@RequestBody AddCommentResolveRequest request);
 }

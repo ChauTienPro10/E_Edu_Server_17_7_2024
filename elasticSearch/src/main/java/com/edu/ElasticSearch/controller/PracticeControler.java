@@ -1,10 +1,12 @@
 package com.edu.ElasticSearch.controller;
 
+import com.edu.ElasticSearch.dto.request.AddCommentResolveRequest;
 import com.edu.ElasticSearch.dto.request.CreateNewPracticeRequest;
 import com.edu.ElasticSearch.dto.request.CreateResolveRequest;
 import com.edu.ElasticSearch.dto.request.LikeResolveRequest;
 import com.edu.ElasticSearch.dto.response.ApiResponse;
 import com.edu.ElasticSearch.dto.response.ResolveResponse;
+import com.edu.ElasticSearch.entity.CommentOfResolve;
 import com.edu.ElasticSearch.entity.Like;
 import com.edu.ElasticSearch.entity.Practice;
 import com.edu.ElasticSearch.services.PracticeResolveService;
@@ -43,5 +45,10 @@ public class PracticeControler {
     @PostMapping("/resolve/like")
     public Like like(@RequestBody LikeResolveRequest request){
         return practiceResolveServicer.likeResolve(request);
+    }
+
+    @PostMapping("/resolve/comment/new")
+    public CommentOfResolve newComment(@RequestBody AddCommentResolveRequest request){
+        return practiceResolveServicer.addNewCmt(request);
     }
 }

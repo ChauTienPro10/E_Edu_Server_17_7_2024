@@ -1,19 +1,20 @@
-package edu.app.gateway.object;
+package com.edu.ElasticSearch.dto.request;
 
+import com.edu.ElasticSearch.entity.PracticeResolve;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CommentOfResolve {
-    String id;
+public class AddCommentResolveRequest {
+
     String content;
     String email;
-    LocalDateTime timestamp;
     String resolveId;
 }

@@ -1,19 +1,18 @@
-package edu.app.gateway.object;
+package edu.app.gateway.dto.request;
 
+import edu.app.gateway.object.PracticeResolve;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CommentOfResolve {
-    String id;
+public class AddCommentResolveRequest {
+
     String content;
     String email;
-    LocalDateTime timestamp;
     String resolveId;
 }

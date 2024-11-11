@@ -20,5 +20,5 @@ public class CommentOfResolve {
     String content;
     String email;
     LocalDateTime timestamp;
-    PracticeResolve practiceResolve;
+    String resolveId;
 }

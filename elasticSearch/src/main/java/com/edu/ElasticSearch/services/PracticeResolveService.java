@@ -1,11 +1,13 @@
 package com.edu.ElasticSearch.services;
 
+import com.edu.ElasticSearch.dto.request.AddCommentResolveRequest;
 import com.edu.ElasticSearch.dto.request.CreateResolveRequest;
 import com.edu.ElasticSearch.dto.request.LikeResolveRequest;
 import com.edu.ElasticSearch.dto.response.ApiResponse;
 import com.edu.ElasticSearch.dto.response.ResolveResponse;
 import com.edu.ElasticSearch.entity.*;
 import com.edu.ElasticSearch.exception.ErrorCode;
+import com.edu.ElasticSearch.repository.CommentOfResolveRepository;
 import com.edu.ElasticSearch.repository.LikeRepository;
 import com.edu.ElasticSearch.repository.PracticeRepository;
 import com.edu.ElasticSearch.repository.PracticeResolveRepository;
@@ -84,6 +86,7 @@ public class PracticeResolveService {
                     .likes(practiceResolve.getLikes())
                     .practiceId(practiceResolve.getPracticeId())
                     .observes(practiceResolve.getObserves())
+                    .comment(practiceResolve.getComment())
                     .content(practiceResolve.getContent())
                     .studentEmail(practiceResolve.getStudentEmail())
                     .timestamp(practiceResolve.getTimestamp())
@@ -93,7 +96,7 @@ public class PracticeResolveService {
     }
 
     public Like likeResolve(LikeResolveRequest request) {
-        if(likeRepository.findByEmailAndPracticeResolveId(request.getEmail(), request.getResolveId()).isPresent()){
+        if (likeRepository.findByEmailAndPracticeResolveId(request.getEmail(), request.getResolveId()).isPresent()) {
             return null;
         }
         // Tìm PracticeResolve theo ID từ request
@@ -131,6 +134,29 @@ public class PracticeResolveService {
 
         // Lưu đối tượng Like mới vào likeRepository và trả về
         return likeRepository.save(like);
+    }
+
+
+    @Autowired
+    CommentOfResolveRepository commentOfResolveRepository;
+
+    public CommentOfResolve addNewCmt(AddCommentResolveRequest request) {
+        Optional<PracticeResolve> practiceResolve = practiceResolveRepository.findById(request.getResolveId());
+        if (practiceResolve.isEmpty()) {
+            return null;
+        }
+        CommentOfResolve newCmt = CommentOfResolve.builder()
+                .content(request.getContent())
+                .resolveId(request.getResolveId())
+                .email(request.getEmail())
+                .timestamp(LocalDateTime.now())
+                .build();
+        commentOfResolveRepository.save(newCmt);
+        List<CommentOfResolve> cmts = practiceResolve.get().getComment();
+        cmts.add(newCmt);
+        practiceResolve.get().setComment(cmts);
+        practiceResolveRepository.save(practiceResolve.get());
+        return newCmt;
     }
 
 
