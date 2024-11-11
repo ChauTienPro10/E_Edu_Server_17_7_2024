@@ -1,4 +1,4 @@
-package edu.app.gateway.dto.request;
+package edu.app.gateway.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -9,10 +9,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CreateResolveRequest {
-
-    String studentEmail;
-    String practiceId;
-    String content;
-
+public class LikeResolveRequest {
+    String resolveId;
+    String email;
 }

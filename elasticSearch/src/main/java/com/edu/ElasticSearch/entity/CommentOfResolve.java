@@ -6,25 +6,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Document(indexName="practice_resolve")
+@Document(indexName="comment_for_resolve")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PracticeResolve {
+public class CommentOfResolve {
     @Id
     String id;
-    String studentEmail;
-    String practiceId;
     String content;
+    String email;
     LocalDateTime timestamp;
-    List<Like> likes;
-    List<ObserveOfResolve> observes;
-    List<CommentOfResolve> comment;
-
-
+    PracticeResolve practiceResolve;
 }

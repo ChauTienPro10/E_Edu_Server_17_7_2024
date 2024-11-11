@@ -36,7 +36,7 @@ public class PracticeService {
         }
 
         Practice practice=new Practice();
-        practice.setResult(request.getResult());
+        practice.setContent(request.getContent());
         practice.setCourseId(request.getCourseId());
         practice.setHardLevel(request.getHardLevel());
         return ApiResponse.<Practice>builder()

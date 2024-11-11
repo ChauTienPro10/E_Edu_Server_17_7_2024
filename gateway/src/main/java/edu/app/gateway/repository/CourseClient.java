@@ -2,6 +2,7 @@ package edu.app.gateway.repository;
 
 import edu.app.gateway.dto.request.*;
 import edu.app.gateway.dto.response.*;
+import edu.app.gateway.object.Like;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -76,4 +77,7 @@ public interface CourseClient {
 
     @GetExchange(url = "/practice/resolve/getAll")
     List<ResolveResponse> getAllResolve(@RequestParam String idPractice);
+
+    @PostExchange(url="/practice/resolve/like")
+    Like like(@RequestBody LikeResolveRequest request);
 }

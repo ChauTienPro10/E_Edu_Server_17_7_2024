@@ -21,7 +21,7 @@ public class Practice {
     @Id
     private String id= UUID.randomUUID().toString();;
     @Field(type = FieldType.Text, analyzer = "standard")
-    private String result;
+    private String content;
     private Integer hardLevel;
     String courseId;
 }

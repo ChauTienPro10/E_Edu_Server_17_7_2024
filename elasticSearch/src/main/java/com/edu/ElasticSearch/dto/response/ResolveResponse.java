@@ -1,5 +1,7 @@
 package com.edu.ElasticSearch.dto.response;
 
+import com.edu.ElasticSearch.entity.CommentOfResolve;
+import com.edu.ElasticSearch.entity.Like;
 import com.edu.ElasticSearch.entity.ObserveOfResolve;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -17,10 +19,13 @@ public class ResolveResponse {
     String id;
     String studentEmail;
     String practiceId;
-    String result;
+    String content;
     LocalDateTime timestamp;
-    Integer numOfLike;
+    List<Like> likes;
+
 
     List<ObserveOfResolve> observes;
+    List<CommentOfResolve> comment;
+
 
 }

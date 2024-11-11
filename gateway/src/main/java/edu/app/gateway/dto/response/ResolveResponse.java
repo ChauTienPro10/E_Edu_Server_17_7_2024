@@ -1,5 +1,7 @@
 package edu.app.gateway.dto.response;
 
+import edu.app.gateway.object.CommentOfResolve;
+import edu.app.gateway.object.Like;
 import edu.app.gateway.object.ObserveOfResolve;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -17,10 +19,11 @@ public class ResolveResponse {
     String id;
     String studentEmail;
     String practiceId;
-    String result;
+    String content;
     LocalDateTime timestamp;
-    Integer numOfLike;
+    List<Like> likes;
 
     List<ObserveOfResolve> observes;
+    List<CommentOfResolve> comment;
 
 }

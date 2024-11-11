@@ -3,8 +3,6 @@ package edu.app.gateway.object;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import java.time.LocalDateTime;
-import java.util.List;
-
 
 @Getter
 @Setter
@@ -12,16 +10,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PracticeResolve {
-
+public class CommentOfResolve {
     String id;
-    String studentEmail;
-    String practiceId;
     String content;
+    String email;
     LocalDateTime timestamp;
-    List<Like> likes;
-
-    List<ObserveOfResolve> observes;
-    List<CommentOfResolve> comment;
-
+    PracticeResolve practiceResolve;
 }

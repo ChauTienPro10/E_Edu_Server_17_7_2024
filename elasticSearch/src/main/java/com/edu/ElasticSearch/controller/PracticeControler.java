@@ -2,8 +2,10 @@ package com.edu.ElasticSearch.controller;
 
 import com.edu.ElasticSearch.dto.request.CreateNewPracticeRequest;
 import com.edu.ElasticSearch.dto.request.CreateResolveRequest;
+import com.edu.ElasticSearch.dto.request.LikeResolveRequest;
 import com.edu.ElasticSearch.dto.response.ApiResponse;
 import com.edu.ElasticSearch.dto.response.ResolveResponse;
+import com.edu.ElasticSearch.entity.Like;
 import com.edu.ElasticSearch.entity.Practice;
 import com.edu.ElasticSearch.services.PracticeResolveService;
 import com.edu.ElasticSearch.services.PracticeService;
@@ -36,5 +38,10 @@ public class PracticeControler {
     @GetMapping("/resolve/getAll")
     public List<ResolveResponse> getAllResolve(@RequestParam String idPractice){
         return practiceResolveServicer.getAllPracticeResolve(idPractice);
+    }
+
+    @PostMapping("/resolve/like")
+    public Like like(@RequestBody LikeResolveRequest request){
+        return practiceResolveServicer.likeResolve(request);
     }
 }

@@ -5,26 +5,17 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-@Document(indexName="practice_resolve")
+@Document(indexName="like")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PracticeResolve {
+public class Like {
     @Id
     String id;
-    String studentEmail;
-    String practiceId;
-    String content;
-    LocalDateTime timestamp;
-    List<Like> likes;
-    List<ObserveOfResolve> observes;
-    List<CommentOfResolve> comment;
-
+    String practiceResolveId;
+    String email;
 
 }

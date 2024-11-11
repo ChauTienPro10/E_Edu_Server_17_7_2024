@@ -1,9 +1,9 @@
-package com.edu.ElasticSearch.dto.request;
+package edu.app.gateway.object;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
+
 
 @Getter
 @Setter
@@ -11,10 +11,10 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CreateResolveRequest {
+public class Like {
 
-    String studentEmail;
-    String practiceId;
-    String content;
+    String id;
+    String practiceResolveId;
+    String email;
 
 }
