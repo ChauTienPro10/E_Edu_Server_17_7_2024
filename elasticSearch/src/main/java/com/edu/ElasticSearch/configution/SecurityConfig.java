@@ -46,6 +46,8 @@ import java.util.List;
 @EnableElasticsearchRepositories(basePackages = "com.edu.ElasticSearch.repository")
 
 public class SecurityConfig {
+
+
     @Autowired
 
     private static final String[] PUBLIC_ENDPOINTS = {
@@ -124,11 +126,14 @@ public class SecurityConfig {
 //    }
 
 
-
+    @Value("${DATA_HOST}")
+    protected String DATA_HOST;
+    @Value("${DATA_PORT}")
+    protected int DATA_PORT;
 
     @Bean(destroyMethod = "close")
     public RestHighLevelClient restClient() {
-        RestClientBuilder builder = RestClient.builder(new HttpHost("localhost", 9200, "http"))
+        RestClientBuilder builder = RestClient.builder(new HttpHost(DATA_HOST, DATA_PORT, "http"))
                 .setDefaultHeaders(compatibilityHeaders());
         return new RestHighLevelClient(builder);
     }

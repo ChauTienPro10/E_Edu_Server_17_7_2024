@@ -6,7 +6,7 @@ spring:
   application:
     name: student-service
   neo4j:
-    uri: bolt://localhost:7687
+    uri: bolt://${NEO4J_HOST:localhost}:7687
     authentication:
       username: neo4j
       password: password

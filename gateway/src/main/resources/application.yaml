@@ -13,14 +13,14 @@ spring:
     gateway:
       routes:
         - id: identity_service
-          uri: http://127.0.0.1:8080
+          uri: ${IDENTITY_URL:http://127.0.0.1:8080}
           predicates:
             - Path=${myapp.api-prefix}/identity/**
           filters:
             - StripPrefix=1
 
         - id: student_service
-          uri: http://127.0.0.1:8081
+          uri: ${STUDENT_URL:http://127.0.0.1:8081}
           predicates:
             - Path= ${myapp.api-prefix}/student/**
           filters:
@@ -28,7 +28,7 @@ spring:
 
 
         - id: course_service
-          uri: http://127.0.0.1:8082
+          uri: ${COURSE_URL:http://127.0.0.1:8082}
           predicates:
             - Path= ${myapp.api-prefix}/elasticSearch/**
           filters:

@@ -3,7 +3,9 @@ server:
   servlet:
     context-path: /elasticSearch
 
-
+DATA_HOST: ${ELASTICSEARCH_HOST:localhost}
+DATA_PORT: ${ELASTICSEARCH_PORT:9200}
+IDENTITY_HOST: ${IDENTITY_URL:http://127.0.0.1:8080}
 spring:
 
   application:

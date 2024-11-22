@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import reactor.core.publisher.Mono;
 
-@FeignClient(name="identity-service", url="http://127.0.0.1:8080/identity")
+@FeignClient(name="identity-service", url="http://${IDENTITY_URL:127.0.0.1}:8080/identity")
 public interface IdentityClient {
 
     @PostMapping(value = "/users/registration")

@@ -10,6 +10,7 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
@@ -29,10 +30,13 @@ public class WebClientConfiguration {
                 .build();
     }
 
+    @Value("${CLIENT_URL:localhost}")
+    protected String clientUrl;
+
     @Bean
     CorsWebFilter corsWebFilter(){
         CorsConfiguration corsConfiguration=new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000")); // Allow all origins; restrict in production
+        corsConfiguration.setAllowedOrigins(List.of("http://"+clientUrl+":3000")); // Allow all origins; restrict in production
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setAllowCredentials(true);

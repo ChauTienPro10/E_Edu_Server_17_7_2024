@@ -168,12 +168,12 @@ public class PayService {
                     .key(payRepository.findByEmail(request.getEmail()).get().getPrivate_key())
                     .build();
             TransRespone res=tokenClient.buyCourse(transTokenRequest);
-            if(res.getResult()==0){
-                return  ApiResponse.<BuyCourseResponse>builder()
-                        .code(ErrorCode.ERR_PAY.getCode())
-                        .message(ErrorCode.ERR_PAY.getMessage())
-                        .build();
-            }
+//            if(res.getResult()==0){
+//                return  ApiResponse.<BuyCourseResponse>builder()
+//                        .code(ErrorCode.ERR_PAY.getCode())
+//                        .message(ErrorCode.ERR_PAY.getMessage())
+//                        .build();
+//            }
             if(res.getResult()==-1){
                 return  ApiResponse.<BuyCourseResponse>builder()
                         .code(ErrorCode.ERR_BALANCE_NOT_ENOUGH.getCode())

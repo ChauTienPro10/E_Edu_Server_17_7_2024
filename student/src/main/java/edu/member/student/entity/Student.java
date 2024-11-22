@@ -20,9 +20,7 @@ public class Student {
     @Id
     @GeneratedValue(generatorClass = UUIDStringGenerator.class)
     String id;
-
     String fullname;
-
     String phone;
     String email;
 }

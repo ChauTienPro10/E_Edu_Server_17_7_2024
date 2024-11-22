@@ -13,6 +13,9 @@ import com.edu.ElasticSearch.repository.SubjectRepository;
 import com.edu.ElasticSearch.repository.TeacherRepository;
 import com.nimbusds.jose.shaded.gson.Gson;
 import lombok.AccessLevel;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -24,16 +27,19 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class CourseService {
     @Autowired
     CourseRepository courseRepository;
+    @Autowired
     InforCourseRepository inforCourseRepository;
     @Autowired
     CourseMapper courseMapper;
+    @Autowired
     TeacherRepository teacherRepository;
+    @Autowired
     SubjectRepository subjectRepository;
     public ApiResponse<Course> createCourse(CreateCourseRequest request){
         try{

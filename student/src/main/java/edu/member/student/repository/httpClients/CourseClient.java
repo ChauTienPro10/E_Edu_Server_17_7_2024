@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
-@FeignClient(name="course-service", url="http://127.0.0.1:8082/elasticSearch")
+@FeignClient(name="course-service", url="http://${COURSE_URL:127.0.0.1}:8082/elasticSearch")
 
 public interface CourseClient {
     @GetMapping(value = "/course/findallbyid")
