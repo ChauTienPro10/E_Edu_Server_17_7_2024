@@ -3,6 +3,7 @@ package edu.member.student.service;
 import edu.member.student.dto.request.StudentCreationRequest;
 import edu.member.student.dto.request.UserCreateRequest;
 import edu.member.student.dto.response.ApiResponse;
+import edu.member.student.dto.response.RegisterResponse;
 import edu.member.student.dto.response.StudentResponse;
 import edu.member.student.entity.Student;
 import edu.member.student.exception.ErrorCode;
@@ -60,6 +61,28 @@ public class StudentService {
                     .message("This email has been use!")
                     .build();
         }
+        if(studentRepository.findByPhone(request.getPhone())!=null){
+            return ApiResponse.<StudentResponse>builder()
+                    .code(2001)
+                    .message("This phone has been use!")
+                    .build();
+        }
+        if(request.getFullname() == null ||  request.getFullname().trim().isEmpty()){
+            return ApiResponse.<StudentResponse>builder()
+                    .code(2002)
+                    .message("Tên không hợp lệ")
+                    .build();
+        }
+        if(request.getPassword() == null ||  request.getPassword().trim().isEmpty()
+            || request.getPassword().length()<6 || request.getPassword().length()> 15
+                || request.getPassword().contains("'") || request.getPassword().contains("\"")
+                || request.getPassword().contains(" ") || request.getPassword().contains("-")
+        ){
+            return ApiResponse.<StudentResponse>builder()
+                    .code(2003)
+                    .message("Mật khẩu không hợp lệ")
+                    .build();
+        }
         try{
             request.setFullname(request.fullnameUper(request.getFullname()));
             Student newStd=studentMapper.toStudent(request);// chuyen yeu cau ve student
@@ -67,13 +90,28 @@ public class StudentService {
             UserCreateRequest newUser=userIdentityMapper.toUserCreateRequest(request);
             newUser.setUsername(newStd.getEmail());
             newUser.setMemberId(newStd.getId());
-//        System.out.println(newUser.getPassword());
-            identityClient.createNewAccount(newUser);
-            return ApiResponse.<StudentResponse>builder() // tao Apiresponse tra ve
-                    .code(1000)  // Success code (default)
-                    .message("Student created successfully")
-                    .result(studentMapper.toStudentResponse(newStd))
-                    .build();
+            try{
+                RegisterResponse userAcc= identityClient.createNewAccount(newUser);
+                if (userAcc ==null){
+                    return ApiResponse.<StudentResponse>builder()
+                            .code(2004)
+                            .message("Lỗi xảy ra trong quá trình tạo tài khoản")
+                            .build();
+                }
+                return ApiResponse.<StudentResponse>builder() // tao Apiresponse tra ve
+                        .code(1000)  // Success code (default)
+                        .message("Student created successfully")
+                        .result(studentMapper.toStudentResponse(newStd))
+                        .build();
+            }
+            catch (Exception ex){
+                studentRepository.delete(newStd);
+                return ApiResponse.<StudentResponse>builder()
+                        .code(ErrorCode.ERROR_CREATE_NEW_STUDENT.getCode())
+                        .message(ErrorCode.ERROR_CREATE_NEW_STUDENT.getMessage())
+                        .build();
+            }
+
         }
         catch(Exception ex){
             log.error("Error creating new student", ex);

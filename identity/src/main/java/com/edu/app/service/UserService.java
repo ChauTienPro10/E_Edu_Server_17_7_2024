@@ -55,6 +55,13 @@ public class UserService {
     }
 
     public boolean changePassword(String username ,String newPass ){
+        if(newPass == null ||  newPass.trim().isEmpty()
+                || newPass.length()<6 || newPass.length()> 15
+                || newPass.contains("'") || newPass.contains("\"")
+                || newPass.contains(" ") || newPass.contains("-")
+        ){
+            return false;
+        }
         try{
             User user=userRepository.findByUsername(username).get();
             user.setPassword(passwordEncoder.encode(newPass));

@@ -3,6 +3,7 @@ package edu.member.student.repository.httpClients;
 import edu.member.student.dto.request.AuthenticationRequest;
 import edu.member.student.dto.request.UserCreateRequest;
 import edu.member.student.dto.response.ApiResponse;
+import edu.member.student.dto.response.RegisterResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,7 @@ import reactor.core.publisher.Mono;
 public interface IdentityClient {
 
     @PostMapping(value = "/users/registration")
-    Object createNewAccount(@RequestBody UserCreateRequest request);
+    RegisterResponse createNewAccount(@RequestBody UserCreateRequest request);
     @PostMapping(value = "/auth/wallet.authen.password",produces = MediaType.APPLICATION_JSON_VALUE)
     ApiResponse<Boolean> authenPass(@RequestBody AuthenticationRequest request);
 }
