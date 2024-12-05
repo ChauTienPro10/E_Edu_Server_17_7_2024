@@ -35,4 +35,12 @@ spring:
             - StripPrefix=1
 
 
+        - id: token_service
+          uri: http://localhost:3001
+          predicates:
+            - Path= ${myapp.api-prefix}/registerService/**
+          filters:
+            - StripPrefix=1
+
+
 

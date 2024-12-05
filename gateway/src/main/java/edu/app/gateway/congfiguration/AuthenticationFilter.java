@@ -40,6 +40,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
             "/identity/.*",
             "/student/.*",
             "/elasticSearch/.*",
+            "/registerService/.*",
 
     };
     @Value("${myapp.api-prefix}")
